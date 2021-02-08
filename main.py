@@ -44,13 +44,13 @@ def choice():
       return "neither got clicked lol"
   return render_template("choice.html")
 
-@app.route('/viewcomment')
+@app.route('/viewcomment', methods=["POST", "GET"])
 def viewcomment():
-  return render_template("choice.html")
+  return render_template("viewcomment.html")
 
-@app.route('/viewuser')
+@app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
-  return render_template("choice.html")
+  return render_template("viewuser.html")
 
 if __name__ == '__main__':
   app.run()

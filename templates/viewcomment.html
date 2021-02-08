@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <!--Custom styles-->
-        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/stylev2.css')}}">
+        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/stylev3.css')}}">
     </head>
     
     <body>
@@ -24,10 +24,14 @@
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
                     <div class="card-body">
-                        <form class="form-choice" action="/choice" method="POST">
-                             <div class="form-group">
-                                <input type="submit" name="choice" value="Check Comment" class="btn float-left btn-warning">
-                                <input type="submit" name="choice" value="Check User" class="btn float-right btn-warning">
+                        <form class="form-viewcomment" action="/viewcomment" method="POST">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="enter comment link" aria-label="enter comment link">
+                                    <div class="input-group-append">
+                                        <input type="submit" value="Search Comment" class="btn float-left btn-warning">
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
