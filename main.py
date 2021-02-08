@@ -34,9 +34,23 @@ def login():
 
 @app.route('/choice', methods=["POST", "GET"])
 def choice():
+  if request.method == "POST":
+    try:
+      if request.form['choice'] == "Check User":
+        return redirect(url_for('viewuser'))
+      elif request.form['choice'] == "Check Comment":
+        return redirect(url_for('viewcomment'))
+    except:
+      return "neither got clicked lol"
   return render_template("choice.html")
 
+@app.route('/viewcomment')
+def viewcomment():
+  return render_template("choice.html")
 
+@app.route('/viewuser')
+def viewuser():
+  return render_template("choice.html")
 
 if __name__ == '__main__':
   app.run()

@@ -16,18 +16,18 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <!--Custom styles-->
-        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/styles.css')}}">
+        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/stylev2.css')}}">
     </head>
     
     <body>
         <div class="container">
             <div class="d-flex justify-content-center h-100">
-                <div class="choice">
-                    <div class="choice-body">
-                        <form class="form-choice" action="/" method="POST">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="form-signin" action="/choice" method="POST">
                              <div class="form-group">
-                                <button type="button" value="Check Comment" class="btn float-left login_btn">
-                                <button type="button" value="Check User" class="btn float-right login_btn">
+                                <input type="submit" name="choice" value="Check Comment" class="btn float-left btn-warning">
+                                <input type="submit" name="choice" value="Check User" class="btn float-right btn-warning">
                             </div>
                         </form>
                     </div>

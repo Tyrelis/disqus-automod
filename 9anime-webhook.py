@@ -1,11 +1,11 @@
 from discord_webhook import DiscordWebhook, DiscordEmbed
 
-webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808249420750520351/7S3GqGkalYuzmNi8M9x6dU3KGjeR40sTbVv0d4ROSwtO_HbrjpBItAuiKfAtCMHtoEuI')
+webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
 
-user = "Kenny"
-comment_id = "4225445"
-timeout_duration = "3 Days"
-mod = "Kenny Stryker"
+user = "null"
+comment_id = "null"
+timeout_duration = "-1 Days"
+mod = "null"
 comment_url = "https://www.undefined.com"
 
 embed = DiscordEmbed(title='Timeout Issued',
