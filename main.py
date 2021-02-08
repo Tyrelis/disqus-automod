@@ -53,4 +53,4 @@ def viewuser():
   return render_template("viewuser.html")
 
 if __name__ == '__main__':
-  app.run()
+  app.run(debug=True)
