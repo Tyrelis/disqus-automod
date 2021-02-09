@@ -23,7 +23,7 @@ class DiscordAlert:
         self.comment_id = comment_id
         self.timeout_duration = "1 Days"
         self.mod = "Kenny Senpai"
-        self.comment_url = 'https://9anime-to.disqus.com/admin/moderate/pending/search/id:{}'.format(comment_id)
+        self.comment_url = 'https://9anime-to.disqus.com/admin/moderate/all/search/id:{}'.format(comment_id)
 
     def send_alert(self):
         embed = DiscordEmbed(title='Timeout Issued',
