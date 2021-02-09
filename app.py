@@ -1,7 +1,7 @@
 from discord_webhook import webhook
 from flask import *
 import pyrebase
-from .discordhook import DiscordAlert
+#from .discordhook import DiscordAlert
 
 app = Flask(__name__)
 
@@ -52,8 +52,8 @@ def viewcomment():
   if request.method == "POST":
       try:
         comment_id = int(request.form['commentid'])
-        alert = DiscordAlert(comment_id)
-        alert.send_alert()
+        #alert = DiscordAlert(comment_id)
+        #alert.send_alert()
       except:
         error = "Invalid Comment ID"
         return render_template('viewcomment.html', error=error)
