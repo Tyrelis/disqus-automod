@@ -7,7 +7,7 @@ import json
 
 webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808249420750520351/7S3GqGkalYuzmNi8M9x6dU3KGjeR40sTbVv0d4ROSwtO_HbrjpBItAuiKfAtCMHtoEuI')
 
-API_KEY = 'nl55taKAfLJah7i8EaglOrFEoifCONO9SwOno5DiNanv0FPXwlxufjQ7DIP3drhc'
+API_KEY = 'LwMepQiQSd2tOCueHzk5rS4fPXA9fgdlpwPHAEvxYHMpQYPkfmhFw7PpRSa5lmsR'
 
 class DiscordAlert:
     def __init__(self, comment_id):
