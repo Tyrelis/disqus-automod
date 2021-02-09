@@ -1,6 +1,9 @@
 <html>
     <body>
-        {% block body %}
-        User: {{ user_data['display_name'] }}
+        <form class="form-viewuser" action="/check_comment/{{ user_data }}" method="POST">
+            {% block body %}
+            User: {{ user_data['display_name'] }}
+            {% endblock %}
+        </form>
     </body>
 </html>

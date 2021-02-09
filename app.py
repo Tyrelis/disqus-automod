@@ -100,15 +100,7 @@ def viewcomment():
         if response['response']['forum'] != '9anime-to':
           raise Exception
 
-        user_data = {
-          'display_name':response['response']['author']['name'],
-          'username':response['response']['author']['name'],
-          'content':response['response']['message'],
-          'upvotes':response['response']['likes'],
-          'downvotes':response['response']['likes'],
-        }
-
-        return redirect(url_for('comment', comment_id = comment_id, user_data = user_data))
+        return redirect(url_for('comment', comment_id = comment_id))
 
         #alert = DiscordAlert(comment_id)
         #alert.send_alert()
@@ -118,13 +110,36 @@ def viewcomment():
         return render_template('viewcomment.html', error=error)
   return render_template("viewcomment.html")
 
-@app.route('/comment/<int:comment_id>', methods=["POST", "GET"])
-def comment(comment_id, user_data):
-  return render_template("viewuser.html", comment_id = comment_id, user_data = user_data)
+@app.route('/check_comment/<int:comment_id>/', methods=["POST", "GET"])
+def comment(comment_id):
+  url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
+        
+  response = requests.get(url)
+  response = json.loads(response.text)
+
+  if response['response']['forum'] != '9anime-to':
+    return redirect(url_for('not_found'))
+
+  user_data = {
+          'display_name':response['response']['author']['name'],
+          'username':response['response']['author']['name'],
+          'content':response['response']['message'],
+          'upvotes':response['response']['likes'],
+          'downvotes':response['response']['likes'],
+        }
+  return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
 @app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
   return render_template("viewuser.html")
+
+@app.route('/404')
+def not_found():
+  return render_template("404.html")
+
+@app.errorhandler(404)
+def not_found(e):
+  return render_template("404.html")
 
 if __name__ == '__main__':
   app.run(debug=True)
