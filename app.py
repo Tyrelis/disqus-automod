@@ -18,6 +18,9 @@ class DiscordAlert:
         
         response = requests.get(url)
         response = json.loads(response.text)
+
+        if response['response']['forum'] != '9anime-to':
+          raise Exception
         
         self.user = response['response']['author']['username']
         self.comment_id = comment_id
