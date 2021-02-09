@@ -101,11 +101,15 @@ def viewcomment():
           raise Exception
 
         user_data = {
-          'displayname':response['response']['author']['name'],
+          'display_name':response['response']['author']['name'],
           'username':response['response']['author']['name'],
-          'content':response['response']['message']
+          'content':response['response']['message'],
+          'upvotes':response['response']['likes'],
+          'downvotes':response['response']['likes'],
         }
-        
+
+        return redirect(url_for('comment', comment_id = comment_id, user_data = user_data))
+
         #alert = DiscordAlert(comment_id)
         #alert.send_alert()
       except Exception as e:
@@ -114,6 +118,9 @@ def viewcomment():
         return render_template('viewcomment.html', error=error)
   return render_template("viewcomment.html")
 
+@app.route('/comment/<int:comment_id>', methods=["POST", "GET"])
+def comment(comment_id, user_data):
+  return render_template("viewuser.html", comment_id = comment_id, user_data = user_data)
 
 @app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
