@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login Page</title>
+        <title>User Login</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,9 +23,9 @@
         <div class="container">
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
-                    {% if us %}
+                    {% if error %}
                     <div class="alert alert-danger">
-                        <center>{{us}}</center>
+                        <center>{{error}}</center>
                     </div>
                     {% endif %}
                     <div class="card-header">

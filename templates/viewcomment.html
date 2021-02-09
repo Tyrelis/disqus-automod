@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login Page</title>
+        <title>View Comment</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,16 +23,16 @@
         <div class="container">
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
-                    {% if invalid %}
-                    <div class="alert alert-danger">
-                        <center>{{invalid}}</center>
-                    </div>
-                    {% endif %}
                     <div class="card-body">
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            <center>{{error}}</center>
+                        </div>
+                        {% endif %}
                         <form class="form-viewcomment" action="/viewcomment" method="POST">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name=url placeholder="enter comment link" aria-label="enter comment link">
+                                    <input type="text" class="form-control" name=commentid placeholder="enter comment id" aria-label="enter comment id">
                                     <div class="input-group-append">
                                         <input type="submit" value="Search Comment" class="btn float-left btn-warning">
                                     </div>

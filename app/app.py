@@ -1,7 +1,7 @@
 from discord_webhook import webhook
 from flask import *
 import pyrebase
-from .discord_hook import DiscordAlert
+from .discordhook import DiscordAlert
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ auth = firebase.auth()
 
 @app.route('/', methods=["POST", "GET"])
 def login():
-  unsuccess = "Invalid credentials"
+  error = None
   if request.method == "POST":
     email = request.form['email']
     password = request.form['password']
@@ -30,7 +30,8 @@ def login():
       auth.sign_in_with_email_and_password(email, password)
       return redirect(url_for('choice'))
     except:
-      return render_template("login.html", us=unsuccess)
+      error = "Invalid credentials"
+      return render_template("login.html", error=error)
 
   return render_template("login.html")
 
@@ -47,10 +48,14 @@ def choice():
 
 @app.route('/viewcomment', methods=["POST", "GET"])
 def viewcomment():
-  invalid = "Invalid URL"
+  error = None
   if request.method == "POST":
-    if type(request.form['url']) == 'int':
-      return "System"
+      try:
+        comment_id = int(request.form['commentid'])
+        alert = DiscordAlert(comment_id)
+      except:
+        error = "Invalid Comment ID"
+        return render_template('viewcomment.html', error=error)
   return render_template("viewcomment.html")
 
 

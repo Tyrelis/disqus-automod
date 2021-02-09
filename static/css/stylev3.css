@@ -14,15 +14,11 @@ align-content: center;
 }
 
 .card{
-height: 70px;
+background-color: rgba(0,0,0,0.0);
+height: 150px;
 margin-top: auto;
 margin-bottom: auto;
 width: 1000px;
-background-color: rgba(0,0,0,0.5) !important;
-}
-
-.card-header h3{
-color: white;
 }
 
 a{
