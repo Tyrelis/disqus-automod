@@ -1,5 +1,7 @@
-import pyrebase
+from discord_webhook import webhook
 from flask import *
+import pyrebase
+from .discord_hook import DiscordAlert
 
 app = Flask(__name__)
 
@@ -32,21 +34,25 @@ def login():
 
   return render_template("login.html")
 
+
 @app.route('/choice', methods=["POST", "GET"])
 def choice():
   if request.method == "POST":
-    try:
       if request.form['choice'] == "Check User":
         return redirect(url_for('viewuser'))
       elif request.form['choice'] == "Check Comment":
         return redirect(url_for('viewcomment'))
-    except:
-      return "neither got clicked lol"
   return render_template("choice.html")
+
 
 @app.route('/viewcomment', methods=["POST", "GET"])
 def viewcomment():
+  invalid = "Invalid URL"
+  if request.method == "POST":
+    if type(request.form['url']) == 'int':
+      return "System"
   return render_template("viewcomment.html")
+
 
 @app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
