@@ -53,6 +53,7 @@ def viewcomment():
       try:
         comment_id = int(request.form['commentid'])
         alert = DiscordAlert(comment_id)
+        alert.send_alert()
       except:
         error = "Invalid Comment ID"
         return render_template('viewcomment.html', error=error)
