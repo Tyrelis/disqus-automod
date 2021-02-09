@@ -92,8 +92,22 @@ def viewcomment():
       try:
         comment_id = int(request.form['commentid'])
 
-        alert = DiscordAlert(comment_id)
-        alert.send_alert()
+        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
+        
+        response = requests.get(url)
+        response = json.loads(response.text)
+
+        if response['response']['forum'] != '9anime-to':
+          raise Exception
+
+        user_data = {
+          'displayname':response['response']['author']['name'],
+          'username':response['response']['author']['name'],
+          'content':response['response']['message']
+        }
+        
+        #alert = DiscordAlert(comment_id)
+        #alert.send_alert()
       except Exception as e:
         print(e)
         error = "Invalid Comment ID"
