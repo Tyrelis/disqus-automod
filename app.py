@@ -1,7 +1,6 @@
-from discord_webhook import webhook
 from flask import *
 import pyrebase
-from discord_webhook import DiscordWebhook, DiscordEmbed
+from discord_webhook import DiscordWebhook, DiscordEmbed, webhook
 import requests
 import json
 
