@@ -1,5 +1,5 @@
 from flask import *
-import pyrebase
+from flask_mysqldb import MySQL, MySQLdb
 from discord_webhook import DiscordWebhook, DiscordEmbed, webhook
 import requests
 import json
@@ -8,6 +8,15 @@ webhook = DiscordWebhook(url='https://discord.com/api/webhooks/80824942075052035
 
 API_KEY = 'LwMepQiQSd2tOCueHzk5rS4fPXA9fgdlpwPHAEvxYHMpQYPkfmhFw7PpRSa5lmsR'
 access_token = 'a0f18fb3e52643eeb79ee4e5535bed88'
+
+app = Flask(__name__)
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = '9animedb'
+
+mysql = MySQL(app)
 
 class DiscordAlert:
 
@@ -46,9 +55,7 @@ class DiscordAlert:
         webhook.add_embed(embed)
         response = webhook.execute()
 
-app = Flask(__name__)
-
-config = {
+'''config = {
   "apiKey": "AIzaSyCIDZEBPCZFI7pZ7xy5MateMBgYOOqPgLc",
   "authDomain": "anime-disqus-bot.firebaseapp.com",
   "databaseURL": "https://anime-disqus-bot-default-rtdb.firebaseio.com",
@@ -60,7 +67,7 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
+auth = firebase.auth()'''
 
 @app.route('/', methods=["POST", "GET"])
 def login():
@@ -70,7 +77,24 @@ def login():
     password = request.form['password']
 
     try:
-      auth.sign_in_with_email_and_password(email, password)
+      #auth.sign_in_with_email_and_password(email, password)
+      return redirect(url_for('choice'))
+    except:
+      error = "Invalid credentials"
+      return render_template("login.html", error=error)
+
+  return render_template("login.html")
+
+
+@app.route('/register', methods=["POST", "GET"])
+def register():
+  error = None
+  if request.method == "POST":
+    email = request.form['email']
+    password = request.form['password']
+
+    try:
+      #auth.sign_in_with_email_and_password(email, password)
       return redirect(url_for('choice'))
     except:
       error = "Invalid credentials"
