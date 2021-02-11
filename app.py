@@ -88,19 +88,20 @@ def login():
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
-  error = None
-  if request.method == "POST":
-    email = request.form['email']
-    password = request.form['password']
+    if request.method == 'GET':
+        return render_template("register.html")
+    else:
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password'].encode('utf-8')
+        hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
-    try:
-      #auth.sign_in_with_email_and_password(email, password)
-      return redirect(url_for('choice'))
-    except:
-      error = "Invalid credentials"
-      return render_template("login.html", error=error)
-
-  return render_template("login.html")
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO users (name, email, password) VALUES (%s,%s,%s)",(name,email,hash_password,))
+        mysql.connection.commit()
+        session['name'] = request.form['name']
+        session['email'] = request.form['email']
+        return redirect(url_for('home'))
 
 
 @app.route('/choice', methods=["POST", "GET"])
