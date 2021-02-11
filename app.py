@@ -99,10 +99,10 @@ def viewcomment():
         if response['response']['forum'] != '9anime-to':
           raise Exception
 
-        return redirect(url_for('comment', comment_id = comment_id))
+        #return redirect(url_for('comment', comment_id = comment_id))
 
-        #alert = DiscordAlert(comment_id)
-        #alert.send_alert()
+        alert = DiscordAlert(comment_id)
+        alert.send_alert()
       except Exception as e:
         print(e)
         error = "Invalid Comment ID"
