@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL, MySQLdb
 from discord_webhook import DiscordWebhook, DiscordEmbed, webhook
 import requests
 import json
+import bcrypt
 
 webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808249420750520351/7S3GqGkalYuzmNi8M9x6dU3KGjeR40sTbVv0d4ROSwtO_HbrjpBItAuiKfAtCMHtoEuI')
 
@@ -86,23 +87,21 @@ def login():
   return render_template("login.html")
 
 
-@app.route('/register', methods=["POST", "GET"])
+'''@app.route('/register', methods=["POST", "GET"])
 def register():
     if request.method == 'GET':
         return render_template("register.html")
     else:
         name = request.form['name']
-        email = request.form['email']
         password = request.form['password'].encode('utf-8')
         hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO users (name, email, password) VALUES (%s,%s,%s)",(name,email,hash_password,))
+        cur.execute("INSERT INTO mods (username, password) VALUES (%s,%s)",(name,hash_password,))
         mysql.connection.commit()
         session['name'] = request.form['name']
-        session['email'] = request.form['email']
-        return redirect(url_for('home'))
-
+        return redirect(url_for('login'))
+'''
 
 @app.route('/choice', methods=["POST", "GET"])
 def choice():
@@ -171,4 +170,6 @@ def not_found(e):
   return render_template("404.html")
 
 if __name__ == '__main__':
+
+  app.secret_key = 'lol'
   app.run(debug=True)
