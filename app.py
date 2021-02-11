@@ -7,13 +7,18 @@ import json
 webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808249420750520351/7S3GqGkalYuzmNi8M9x6dU3KGjeR40sTbVv0d4ROSwtO_HbrjpBItAuiKfAtCMHtoEuI')
 
 API_KEY = 'LwMepQiQSd2tOCueHzk5rS4fPXA9fgdlpwPHAEvxYHMpQYPkfmhFw7PpRSa5lmsR'
+access_token = 'a0f18fb3e52643eeb79ee4e5535bed88'
 
 class DiscordAlert:
-    def __init__(self, comment_id):
 
-        global API_KEY
+    global API_KEY
+    global access_token
 
-        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
+    def __init__(self, comment_id):        
+
+        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY,
+                                                                                                        comment_id,
+                                                                                                        access_token)
         
         response = requests.get(url)
         response = json.loads(response.text)
