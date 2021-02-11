@@ -16,6 +16,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = '9animedb'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
@@ -74,14 +75,28 @@ auth = firebase.auth()'''
 def login():
   error = None
   if request.method == "POST":
-    email = request.form['email']
-    password = request.form['password']
+    username = request.form['username']
+    password = request.form['password'].encode('utf-8')
 
     try:
-      #auth.sign_in_with_email_and_password(email, password)
-      return redirect(url_for('choice'))
-    except:
-      error = "Invalid credentials"
+      curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+      curl.execute("SELECT * FROM mods WHERE username=%s",(username,))
+      user = curl.fetchone()
+      curl.close()
+
+      if user:
+        if bcrypt.hashpw(password, user["password"].encode('utf-8')) == user["password"].encode('utf-8'):
+          session['name'] = user['username']
+          return redirect(url_for('choice'))
+        else:
+          error = "Invalid credentials"
+          return render_template("login.html", error=error)
+      else:
+        error = "Invalid credentials"
+        return render_template("login.html", error=error)
+    except Exception as e:
+      error = "An error occurred."
+      print(e)
       return render_template("login.html", error=error)
 
   return render_template("login.html")
@@ -105,12 +120,17 @@ def register():
 
 @app.route('/choice', methods=["POST", "GET"])
 def choice():
-  if request.method == "POST":
-      if request.form['choice'] == "Check User":
-        return redirect(url_for('viewuser'))
-      elif request.form['choice'] == "Check Comment":
-        return redirect(url_for('viewcomment'))
-  return render_template("choice.html")
+  print(session.get('user'))
+  if session.get('user'):
+    if request.method == "POST":
+        if request.form['choice'] == "Check User":
+          return redirect(url_for('viewuser'))
+        elif request.form['choice'] == "Check Comment":
+          return redirect(url_for('viewcomment'))
+    return render_template("choice.html")
+  else:
+    error = "Unauthorized Access."
+    return render_template("login.html", error=error)
 
 
 @app.route('/viewcomment', methods=["POST", "GET"])
