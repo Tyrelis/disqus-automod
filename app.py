@@ -120,8 +120,7 @@ def register():
 
 @app.route('/choice', methods=["POST", "GET"])
 def choice():
-  print(session.get('user'))
-  if session.get('user'):
+  if session.get('name'):
     if request.method == "POST":
         if request.form['choice'] == "Check User":
           return redirect(url_for('viewuser'))
