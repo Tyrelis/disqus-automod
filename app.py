@@ -241,9 +241,15 @@ def checkcomment(comment_id):
   if session.get('name'):
     try:
 
-      if request.method == "POST":
-        comment_id = request.form['comment_id']
-        return redirect(url_for('checkcomment', comment_id = comment_id))
+      try:
+        if request.method == "POST":
+          comment_id = request.form['comment_id']
+          comment_id = int(comment_id)
+          return redirect(url_for('checkcomment', comment_id = comment_id))
+
+      except Exception as e:
+        error = "Invalid Comment ID"
+        return render_template('viewcomment.html', error=error)
 
       comment_id = int(comment_id)
 

@@ -30,25 +30,25 @@
               <center>{{error}}</center>
             </div>
             {% endif %}
-            <form class="form-viewcomment" action="/checkcomment/{{ comment_id }}" method="POST">
+            <form class="form-viewcomment" action="/checkcomment/{{ comment_id }}/" method="POST">
               <div class="form-group">
                 <div class="input-group">
                   <input type="text" class="form-control" name="comment_id" placeholder="enter comment id" aria-label="enter comment id" required>
                   <div class="input-group-append">
                     <input type="submit" value="Search Comment" class="btn float-left btn-warning">
                   </div>
+                    {% if user_data %}
+                    <div class="userinfo">
+                        <label>Display Name:</label> {{user_data['display_name']}}<br>
+                        <label>Username:</label> {{user_data['display_name']}}<br>
+                        <label>Content:</label> {{user_data['content']}}<br>
+                        <label>Upvotes:</label> {{user_data['upvotes']}}<br>
+                        <label>Downvotes:</label> {{user_data['downvotes']}}<br>
+                    </div>
+                    {% endif %}
                 </div>
-              </div>
+             </div>
             </form>
-            {% if user_data %}
-            <div class="userinfo">
-                <label>Display Name:</label> {{user_data['display_name']}}<br>
-                <label>Username:</label> {{user_data['display_name']}}<br>
-                <label>Content:</label> {{user_data['content']}}<br>
-                <label>Upvotes:</label> {{user_data['upvotes']}}<br>
-                <label>Downvotes:</label> {{user_data['downvotes']}}<br>
-            </div>
-            {% endif %}
           </div>
         </div>
       </div>
