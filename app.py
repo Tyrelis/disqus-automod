@@ -21,11 +21,11 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 class DiscordAlert:
-
+    
     global API_KEY
     global access_token
-
-    def __init__(self, comment_id):        
+    
+    def __init__(self, comment_id, reason, timeout = 0):
 
         url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY,
                                                                                                         comment_id,
@@ -33,29 +33,99 @@ class DiscordAlert:
         
         response = requests.get(url)
         response = json.loads(response.text)
-
+        
         if response['response']['forum'] != '9anime-to':
-          raise Exception
+            raise Exception
         
         self.user = response['response']['author']['username']
         self.comment_id = comment_id
-        self.timeout_duration = "1 Days"
-        self.mod = "Kenny Senpai"
+        self.reason = reason
+        self.timeout_days = timeout
+        self.message = response['response']['message']
+        self.editabletime = response['response']['editableUntil']
+        self.mod = "Kenny Stryker"
         self.comment_url = 'https://9anime-to.disqus.com/admin/moderate/all/search/id:{}'.format(comment_id)
 
-    def send_alert(self):
-        embed = DiscordEmbed(title='Timeout Issued',
+    def send_alert_timeout(self):
+        embed = DiscordEmbed(title='Timeout Issued', color=0x5A2E98)
+
+        embed.set_author(name="View Comment", url=self.comment_url)
+
+        embed.add_embed_field(name="User", value=self.user)
+        embed.add_embed_field(name="Comment ID", value=self.comment_id)
+        embed.add_embed_field(name="Timeout Duration", value=self.timeout_days)
+        embed.add_embed_field(name="Reason", value=self.reason)
+        embed.add_embed_field(name="Moderator", value=self.mod)
+
+        webhook.add_embed(embed)
+        response = webhook.execute()
+        
+    def send_alert_ban(self):
+        embed = DiscordEmbed(title='Permanent Ban Issued',
                             color=0x5A2E98)
 
         embed.set_author(name="View Comment", url=self.comment_url)
 
         embed.add_embed_field(name="User", value=self.user)
         embed.add_embed_field(name="Comment ID", value=self.comment_id)
-        embed.add_embed_field(name="Timeout Duration", value=self.timeout_duration)
+        embed.add_embed_field(name="Reason", value=self.reason)
         embed.add_embed_field(name="Moderator", value=self.mod)
 
         webhook.add_embed(embed)
         response = webhook.execute()
+        
+    def warn(self): 
+        
+        time_diff = datetime.datetime.strptime(self.editabletime, '%Y-%m-%dT%H:%M:%S') - datetime.datetime.now()
+        time_diff = time_diff.total_seconds()
+            
+        url_delete_comment = 'https://disqus.com/api/3.0/posts/remove.json?api_key={}&post={}&access_token={}'.format(API_KEY,
+                                                                                                        self.comment_id,
+                                                                                                        access_token)
+        
+        ban_reason = self.reason +" - "+ self.mod
+        
+        timeout_duration = (datetime.datetime.now() + datetime.timedelta(days=self.timeout_days)).strftime('%Y-%m-%d %H:%M:%S')
+    
+        
+        if time_diff < 604800:
+            
+            timeout_message = '''<a><b>This comment has been deleted for violating  <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been given a TimeOut ban for {} Day(s) and ONE warning point. If you're given TWO warning points within the next 30 days, you will be banned.<br>Warned by: {}<br>Reason: {}<br><br>Think you've been wrongly warned? <a href="https://discord.gg/9anime"><b>Post an appeal!</b></a><br>--------------------------------------------------</b><br>'''.format(self.timeout_days, self.mod, self.reason)
+            
+            url_vote = 'https://disqus.com/api/3.0/posts/vote.json?api_key={}&post={}&access_token={}&vote=1'.format(API_KEY,
+                                                                                                        self.comment_id,
+                                                                                                        access_token)
+            
+            url_editcomment = 'https://disqus.com/api/3.0/posts/update.json?api_key={}&post={}&access_token={}&message={}'.format(API_KEY,
+                                                                                                                                 self.comment_id,
+                                                                                                                                 access_token,
+                                                                                                                                 timeout_message+self.message)
+            self.edited = requests.post(url_editcomment)
+            self.upvoted = requests.post(url_vote)
+            
+        else: 
+            timeout_message = '''This comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been banned.<br><br>Username: @{}:disqus<br>Reason: {}<br>Banned By: {}<br>Evidence: <spoiler>{}</spoiler>'''.format(self.user,
+            self.reason, self.mod, self.message)
+            
+            url_post = 'https://disqus.com/api/3.0/posts/create.json?api_key={}&thread={}&access_token={}&message={}'.format(API_KEY,
+                                                                                                                            6292105195,
+                                                                                                                            access_token,
+                                                                                                                            timeout_message)
+            self.posted = requests.post(url_post)
+            
+            print("Posted = {}".format(self.posted))
+            
+        url_ban_user = 'https://disqus.com/api/3.0/forums/block/banPostAuthor.json?api_key={}&post={}&access_token={}&dateExpires={}&notes={}&banEmail=1&banUser=1'.format(
+                                                                                                                                 API_KEY,
+                                                                                                                                 self.comment_id,
+                                                                                                                                 access_token,
+                                                                                                                                 timeout_duration,
+                                                                                                                                 ban_reason)
+            
+        self.deleted = requests.post(url_delete_comment)
+        self.banned = requests.post(url_ban_user)
+        
+        self.send_alert_timeout()
 
 '''config = {
   "apiKey": "AIzaSyCIDZEBPCZFI7pZ7xy5MateMBgYOOqPgLc",
