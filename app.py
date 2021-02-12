@@ -240,6 +240,11 @@ def viewcomment():
 def checkcomment(comment_id):
   if session.get('name'):
     try:
+
+      if request.method == "POST":
+        comment_id = request.form['comment_id']
+        return redirect(url_for('checkcomment', comment_id = comment_id))
+
       comment_id = int(comment_id)
 
       url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
