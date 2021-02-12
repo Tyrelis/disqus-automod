@@ -45,6 +45,7 @@ class DiscordAlert:
         self.message = response['response']['message']
         self.editabletime = response['response']['editableUntil']
         self.mod = session.get('name')
+        print(self.mod)
         self.comment_url = 'https://9anime-to.disqus.com/admin/moderate/all/search/id:{}'.format(comment_id)
 
     def send_alert_timeout(self):
