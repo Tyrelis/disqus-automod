@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <!--Custom styles-->
-        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/stylev3.css')}}">
+        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/viewcomment.css')}}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
     
@@ -30,7 +30,7 @@
                             <center>{{error}}</center>
                         </div>
                         {% endif %}
-                        <form class="form-viewcomment" action="/check_comment/{{ user_data }}" method="POST">
+                        <form class="form-viewcomment" action="/viewcomment" method="POST">
                             <div class="form-group">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name=commentid placeholder="enter comment id" aria-label="enter comment id" required>
@@ -44,15 +44,26 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
 
-<html>
-    <body>
-        <form class="form-viewuser" action="/check_comment/{{ user_data }}" method="POST">
-            {% block body %}
-            User: {{ user_data['display_name'] }}
-            {% endblock %}
-        </form>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </body>
 </html>
