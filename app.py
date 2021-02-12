@@ -232,6 +232,7 @@ def viewcomment():
         return render_template('viewcomment.html', error=error)
   return render_template("viewcomment.html")
 
+
 @app.route('/checkcomment/<int:comment_id>/', methods=["POST", "GET"])
 def checkcomment(comment_id):
   url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
@@ -251,17 +252,21 @@ def checkcomment(comment_id):
         }
   return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
+
 @app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
   return render_template("viewuser.html")
+
 
 @app.route('/404')
 def not_found():
   return render_template("404.html")
 
+
 @app.errorhandler(404)
 def not_found(e):
   return render_template("404.html")
+
 
 if __name__ == '__main__':
 
