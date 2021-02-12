@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <!--Custom styles-->
-        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/comment.css')}}">
+        <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/viewcomment.css')}}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
     
@@ -25,11 +25,6 @@
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
                     <div class="card-body">
-                        {% if error %}
-                        <div class="alert alert-danger">
-                            <center>{{error}}</center>
-                        </div>
-                        {% endif %}
                         <form class="form-viewcomment" action="/checkcomment" method="POST">
                             <div class="form-group">
                                 <div class="input-group">

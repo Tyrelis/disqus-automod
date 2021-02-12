@@ -212,7 +212,7 @@ def viewcomment():
   error = None
   if request.method == "POST":
       try:
-        comment_id = int(request.form['commentid'])
+        comment_id = int(request.form['comment_id'])
 
         url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
         
@@ -235,22 +235,32 @@ def viewcomment():
 
 @app.route('/checkcomment/<int:comment_id>/', methods=["POST", "GET"])
 def checkcomment(comment_id):
-  url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
-        
-  response = requests.get(url)
-  response = json.loads(response.text)
+  if session.get('name'):
+    try:
+      comment_id = int(comment_id)
 
-  if response['response']['forum'] != '9anime-to':
-    return redirect(url_for('not_found'))
+      url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
+            
+      response = requests.get(url)
+      response = json.loads(response.text)
 
-  user_data = {
-          'display_name':response['response']['author']['name'],
-          'username':response['response']['author']['name'],
-          'content':response['response']['message'],
-          'upvotes':response['response']['likes'],
-          'downvotes':response['response']['likes'],
-        }
-  return render_template("comment.html", comment_id = comment_id, user_data = user_data)
+      if response['response']['forum'] != '9anime-to':
+        return redirect(url_for('not_found'))
+
+      user_data = {
+              'display_name':response['response']['author']['name'],
+              'username':response['response']['author']['name'],
+              'content':response['response']['message'],
+              'upvotes':response['response']['likes'],
+              'downvotes':response['response']['likes'],
+            }
+      return render_template("comment.html", comment_id = comment_id, user_data = user_data)
+
+    except:
+      return redirect(url_for('not_found'))
+  else:
+    error = "Unauthorized Access."
+    return render_template("login.html", error=error)
 
 
 @app.route('/viewuser', methods=["POST", "GET"])
