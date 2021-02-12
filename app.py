@@ -220,8 +220,8 @@ def viewcomment():
 
         #return redirect(url_for('comment', comment_id = comment_id))
 
-        alert = DiscordAlert(comment_id)
-        alert.send_alert()
+        alert = DiscordAlert(comment_id, reason="lolz", timeout=3)
+        alert.send_timeout_alert()
       except Exception as e:
         print(e)
         error = "Invalid Comment ID"
