@@ -63,8 +63,7 @@ class DiscordAlert:
         response = webhook.execute()
         
     def send_alert_ban(self):
-        embed = DiscordEmbed(title='Permanent Ban Issued',
-                            color=0x5A2E98)
+        embed = DiscordEmbed(title='Permanent Ban Issued', color=0x5A2E98)
 
         embed.set_author(name="View Comment", url=self.comment_url)
 
