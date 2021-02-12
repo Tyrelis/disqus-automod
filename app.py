@@ -144,33 +144,37 @@ auth = firebase.auth()'''
 
 @app.route('/', methods=["POST", "GET"])
 def login():
-  error = None
-  if request.method == "POST":
-    username = request.form['username']
-    password = request.form['password'].encode('utf-8')
 
-    try:
-      curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-      curl.execute("SELECT * FROM mods WHERE username=%s",(username,))
-      user = curl.fetchone()
-      curl.close()
+  if session.get('name'):
+    return redirect(url_for('choice'))
+  else:
+    error = None
+    if request.method == "POST":
+      username = request.form['username']
+      password = request.form['password'].encode('utf-8')
 
-      if user:
-        if bcrypt.hashpw(password, user["password"].encode('utf-8')) == user["password"].encode('utf-8'):
-          session['name'] = user['username']
-          return redirect(url_for('choice'))
+      try:
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("SELECT * FROM mods WHERE username=%s",(username,))
+        user = curl.fetchone()
+        curl.close()
+
+        if user:
+          if bcrypt.hashpw(password, user["password"].encode('utf-8')) == user["password"].encode('utf-8'):
+            session['name'] = user['username']
+            return redirect(url_for('choice'))
+          else:
+            error = "Invalid credentials"
+            return render_template("login.html", error=error)
         else:
           error = "Invalid credentials"
           return render_template("login.html", error=error)
-      else:
-        error = "Invalid credentials"
+      except Exception as e:
+        error = "An error occurred."
+        print(e)
         return render_template("login.html", error=error)
-    except Exception as e:
-      error = "An error occurred."
-      print(e)
-      return render_template("login.html", error=error)
 
-  return render_template("login.html")
+    return render_template("login.html")
 
 
 '''@app.route('/register', methods=["POST", "GET"])
@@ -220,16 +224,16 @@ def viewcomment():
 
         alert = DiscordAlert(comment_id, reason="lolz", timeout=3)
         alert.send_alert_timeout()
-        
-        return redirect(url_for('viewcomment'))
+
+        return redirect(url_for('checkcomment'))
       except Exception as e:
         print(e)
         error = "Invalid Comment ID"
         return render_template('viewcomment.html', error=error)
   return render_template("viewcomment.html")
 
-@app.route('/check_comment/<int:comment_id>/', methods=["POST", "GET"])
-def comment(comment_id):
+@app.route('/checkcomment/<int:comment_id>/', methods=["POST", "GET"])
+def checkcomment(comment_id):
   url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
         
   response = requests.get(url)
