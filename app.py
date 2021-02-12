@@ -209,29 +209,32 @@ def choice():
 
 @app.route('/viewcomment', methods=["POST", "GET"])
 def viewcomment():
-  error = None
-  if request.method == "POST":
-      try:
-        comment_id = int(request.form['comment_id'])
+  if session.get('user'):
+    error = None
+    if request.method == "POST":
+        try:
+          comment_id = int(request.form['comment_id'])
 
-        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
-        
-        response = requests.get(url)
-        response = json.loads(response.text)
+          url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
+          
+          response = requests.get(url)
+          response = json.loads(response.text)
 
-        if response['response']['forum'] != '9anime-to':
-          raise Exception
+          if response['response']['forum'] != '9anime-to':
+            raise Exception
 
-        alert = DiscordAlert(comment_id, reason="lolz", timeout=3)
-        alert.send_alert_timeout()
+          #alert = DiscordAlert(comment_id, reason="lolz", timeout=3)
+          #alert.send_alert_timeout()
 
-        return redirect(url_for('checkcomment'))
-      except Exception as e:
-        print(e)
-        error = "Invalid Comment ID"
-        return render_template('viewcomment.html', error=error)
-  return render_template("viewcomment.html")
-
+          return redirect(url_for('checkcomment'))
+        except Exception as e:
+          print(e)
+          error = "Invalid Comment ID"
+          return render_template('viewcomment.html', error=error)
+    return render_template("viewcomment.html")
+  else:
+    error = "Unauthorized Access."
+    return render_template("login.html", error=error)
 
 @app.route('/checkcomment/<int:comment_id>/', methods=["POST", "GET"])
 def checkcomment(comment_id):
@@ -254,6 +257,7 @@ def checkcomment(comment_id):
               'upvotes':response['response']['likes'],
               'downvotes':response['response']['likes'],
             }
+
       return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
     except:
