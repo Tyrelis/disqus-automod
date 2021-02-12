@@ -16,7 +16,7 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
       <!--Custom styles-->
-      <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/viewcomment.css')}}">
+      <link rel="stylesheet" type="text/css"  href="{{url_for('static', filename='css/comment.css')}}">
       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
     
@@ -30,7 +30,7 @@
               <center>{{error}}</center>
             </div>
             {% endif %}
-            <form class="form-viewcomment" action="/checkcomment" method="POST">
+            <form class="form-viewcomment" action="/checkcomment/{{ user_data }}" method="POST">
               <div class="form-group">
                 <div class="input-group">
                   <input type="text" class="form-control" name="comment_id" placeholder="enter comment id" aria-label="enter comment id" required>
@@ -41,7 +41,7 @@
               </div>
             </form>
             {% if user_data %}
-            <div>
+            <div class="userinfo">
                 <label>Display Name:</label> {{user_data['display_name']}}<br>
                 <label>Username:</label> {{user_data['display_name']}}<br>
                 <label>Content:</label> {{user_data['content']}}<br>

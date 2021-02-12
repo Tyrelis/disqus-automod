@@ -209,13 +209,13 @@ def choice():
 
 @app.route('/viewcomment', methods=["POST", "GET"])
 def viewcomment():
-  if session.get('user'):
+  if session.get('name'):
     error = None
     if request.method == "POST":
         try:
           comment_id = int(request.form['comment_id'])
 
-          url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
+          url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
           
           response = requests.get(url)
           response = json.loads(response.text)
@@ -226,7 +226,7 @@ def viewcomment():
           #alert = DiscordAlert(comment_id, reason="lolz", timeout=3)
           #alert.send_alert_timeout()
 
-          return redirect(url_for('checkcomment'))
+          return redirect(url_for('checkcomment', comment_id = comment_id))
         except Exception as e:
           print(e)
           error = "Invalid Comment ID"
@@ -242,7 +242,7 @@ def checkcomment(comment_id):
     try:
       comment_id = int(comment_id)
 
-      url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}'.format(API_KEY, comment_id)
+      url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
             
       response = requests.get(url)
       response = json.loads(response.text)
