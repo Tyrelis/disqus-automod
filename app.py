@@ -303,7 +303,24 @@ def checkcomment(comment_id):
         return render_template("comment.html", comment_id = comment_id, user_data = user_data, success=success)
 
       if 'ban_btn' in request.form:
-        return str(request.form['ban_reason'])
+        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
+            
+        response = requests.get(url)
+        response = json.loads(response.text)
+
+        user_data = {
+              'display_name':response['response']['author']['name'],
+              'username':response['response']['author']['username'],
+              'content':response['response']['message'].replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>'),
+              'upvotes':response['response']['likes'],
+              'downvotes':response['response']['likes'],
+            }
+        
+        discord_alert = DiscordAlert(comment_id, reason=request.form['ban_reason'])
+        discord_alert.ban()
+
+        success = "Permanent Ban Issued"
+        return render_template("comment.html", comment_id = comment_id, user_data = user_data, success=success)
 
       try:
 
