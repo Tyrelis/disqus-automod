@@ -52,11 +52,11 @@
                   </p><label>Content: {{user_data['content']|safe}}</label><br></p>
 
                   </p><label>Upvotes: <b>{{user_data['upvotes']}}</b><br>
-                             Downvotes: </b>{{user_data['downvotes']}}</b></label></p>
+                             Downvotes: <b>{{user_data['downvotes']}}</b></label></p>
                 </div>
                 {% endif %}
                 <input type="button" value="Issue Timeout" class="btn float-left btn-warning" data-toggle="modal" data-target="#timeoutModal">
-                <input type="button" value="Issue Permanent Ban" class="btn float-right btn-warning" data-toggle="modal" data-target="#banModal">
+                <input type="button" value="Issue Ban" class="btn float-right btn-warning" data-toggle="modal" data-target="#banModal">
              </div>
             </form>
           </div>
@@ -66,32 +66,32 @@
 
     <!-- Timeout Modal -->
     <div class="modal fade" id="timeoutModal" tabindex="-1" role="dialog" aria-labelledby="timeoutModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="timeoutModalLongTitle">Issue Timeout</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form class="form-checkcomment" method="POST">
-              <div class="form-group">
-                <div class="input-group form-group">
-                  <input type="text" class="form-control" name="timeout_reason" placeholder="reason" required>
-                </div>
-                <div class="input-group form-group">
-                  <input type="password" class="form-control" name="timeout_duration" placeholder="enter timeout duration (in days)" required>
-                </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <input type="submit" id="judgement" value="Issue Timeout" class="btn btn-warning">
-              </div>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="timeoutModalLongTitle">Issue Timeout</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-          </form>
+          <div class="modal-body">
+              <form class="form-checkcomment" action="" method="POST">
+                <div class="form-group">
+                  <div class="input-group form-group">
+                    <input type="text" class="form-control" name="timeout_reason" placeholder="reason" required>
+                  </div>
+                  <div class="input-group form-group">
+                    <input type="text" class="form-control" name="timeout_duration" placeholder="enter timeout duration (in days)" required>
+                  </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <button type="submit" name="timeout_btn" value="timeout_btn" class="btn btn-warning">Issue Timeout</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </div>
 
     <!-- Ban Modal -->
@@ -105,13 +105,17 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="input-group form-group">
-              <input type="text" class="form-control" name="ban_reason" placeholder="reason" required>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <input type="submit" id="judgement" value="Issue Permanent Ban" class="btn btn-warning">
+            <form class="form-checkcomment" action="" method="POST">
+              <div class="form-group">
+                <div class="input-group form-group">
+                  <input type="text" class="form-control" name="ban_reason" placeholder="reason" required>
+                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" name="ban_btn" class="btn btn-warning">Issue Ban</button>
+              </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
