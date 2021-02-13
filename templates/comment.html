@@ -40,17 +40,38 @@
                 </div>
                 {% if user_data %}
                 <div class="text-white">
-                  <label>Display Name:</label> {{user_data['display_name']}}
-                  <label>Username:</label> {{user_data['username']}}<br>
-                  <label>Content:</label> {{user_data['content']}}<br>
-                  <label>Upvotes:</label> {{user_data['upvotes']}}<br>
-                  <label>Downvotes:</label> {{user_data['downvotes']}}<br></p>
+                  <label>Display Name: {{user_data['display_name']}}</label><br>
+                  <label>Username: {{user_data['username']}}</label><br>
+                  <label>Content: {{user_data['content']}}</label><br>
+                  <label>Upvotes: {{user_data['upvotes']}}</label><br>
+                  <label>Downvotes: {{user_data['downvotes']}}</label>
                 </div>
                 {% endif %}
-                <input type="submit" name="choice" value="Issue Timeout" class="btn float-left btn-warning">
-                <input type="submit" name="choice" value="Issue Ban" class="btn float-right btn-warning">
+                <button type="button" class="btn float-left btn-warning" data-toggle="modal" data-target="#timeoutModal">Issue Timeout</button>
+                <input type="button" value="Issue Ban" class="btn float-right btn-warning" data-toggle="modal" data-target="#banModal">
              </div>
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="timeoutModal" tabindex="-1" role="dialog" aria-labelledby="timeoutModalTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="timeoutModalTitle">Timeout</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>lol</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" value="Issue Timeout" class="btn float-left btn-warning">
           </div>
         </div>
       </div>
