@@ -245,6 +245,15 @@ def checkcomment(comment_id):
         if request.method == "POST":
           comment_id = request.form['comment_id']
           comment_id = int(comment_id)
+
+          url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
+
+          response = requests.get(url)
+          response = json.loads(response.text)
+
+          if response['response']['forum'] != '9anime-to':
+            raise Exception
+
           return redirect(url_for('checkcomment', comment_id = comment_id))
 
       except Exception as e:
