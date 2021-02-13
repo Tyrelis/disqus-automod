@@ -130,20 +130,6 @@ class DiscordAlert:
         
         self.send_alert_timeout()
 
-'''config = {
-  "apiKey": "AIzaSyCIDZEBPCZFI7pZ7xy5MateMBgYOOqPgLc",
-  "authDomain": "anime-disqus-bot.firebaseapp.com",
-  "databaseURL": "https://anime-disqus-bot-default-rtdb.firebaseio.com",
-  "projectId": "anime-disqus-bot",
-  "storageBucket": "anime-disqus-bot.appspot.com",
-  "messagingSenderId": "254500274459",
-  "appId": "1:254500274459:web:72aac6829f9779c9d213be",
-  "measurementId": "G-3SVF0VMR12"
-}
-
-firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()'''
-
 @app.route('/', methods=["POST", "GET"])
 def login():
 
