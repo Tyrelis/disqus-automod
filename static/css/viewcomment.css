@@ -14,8 +14,8 @@ align-content: center;
 }
 
 .card{
-background-color: rgba(0,0,0,0.0);
-height: 150px;
+background-color: rgba(0,0,0,0.5);
+height: auto;
 margin-top: auto;
 margin-bottom: auto;
 width: 1000px;
