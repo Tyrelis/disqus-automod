@@ -37,18 +37,18 @@
                   <div class="input-group-append">
                     <input type="submit" value="Search Comment" class="btn float-left btn-warning">
                   </div>
-                    {% if user_data %}
-                    <div class="text-white">
-                      <label>Display Name:</label> {{user_data['display_name']}}
-                      <label>Username:</label> {{user_data['username']}}<br>
-                      <label>Content:</label> {{user_data['content']}}<br>
-                      <label>Upvotes:</label> {{user_data['upvotes']}}<br>
-                      <label>Downvotes:</label> {{user_data['downvotes']}}<br></p>
-                    </div>
-                    {% endif %}
-                    <input type="submit" name="choice" value="Issue Timeout" class="btn float-left btn-warning">
-                    <input type="submit" name="choice" value="Issue Ban" class="btn float-right btn-warning">
                 </div>
+                {% if user_data %}
+                <div class="text-white">
+                  <label>Display Name:</label> {{user_data['display_name']}}
+                  <label>Username:</label> {{user_data['username']}}<br>
+                  <label>Content:</label> {{user_data['content']}}<br>
+                  <label>Upvotes:</label> {{user_data['upvotes']}}<br>
+                  <label>Downvotes:</label> {{user_data['downvotes']}}<br></p>
+                </div>
+                {% endif %}
+                <input type="submit" name="choice" value="Issue Timeout" class="btn float-left btn-warning">
+                <input type="submit" name="choice" value="Issue Ban" class="btn float-right btn-warning">
              </div>
             </form>
           </div>
