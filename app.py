@@ -77,8 +77,7 @@ class DiscordAlert:
         
     def timeout(self): 
         
-        time_diff = datetime.datetime.strptime(self.editabletime, '%Y-%m-%dT%H:%M:%S') - datetime.datetime.now()
-        time_diff = time_diff.total_seconds()
+        isEditable = datetime.datetime.strptime(self.editabletime, '%Y-%m-%dT%H:%M:%S') > datetime.datetime.now()
             
         url_delete_comment = 'https://disqus.com/api/3.0/posts/remove.json?api_key={}&post={}&access_token={}'.format(API_KEY,
                                                                                                         self.comment_id,
@@ -87,9 +86,10 @@ class DiscordAlert:
         ban_reason = self.reason +" - "+ self.mod
         
         timeout_duration = (datetime.datetime.now() + datetime.timedelta(days=self.timeout_days)).strftime('%Y-%m-%d %H:%M:%S')
-    
-        
-        if time_diff < 604800:
+
+        print(isEditable)
+
+        if isEditable:
             
             timeout_message = '''<a><b>This comment has been deleted for violating  <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been given a TimeOut ban for {} Day(s) and ONE warning point. If you're given TWO warning points within the next 30 days, you will be banned.<br>Warned by: {}<br>Reason: {}<br><br>Think you've been wrongly warned? <a href="https://discord.gg/9anime"><b>Post an appeal!</b></a><br>--------------------------------------------------</b><br>'''.format(self.timeout_days, self.mod, self.reason)
             
@@ -105,8 +105,7 @@ class DiscordAlert:
             self.upvoted = requests.post(url_vote)
             
         else: 
-            timeout_message = '''This comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been banned.<br><br>Username: @{}:disqus<br>Reason: {}<br>Banned By: {}<br>Evidence: <spoiler>{}</spoiler>'''.format(self.user,
-            self.reason, self.mod, self.message)
+            timeout_message = '''This comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been banned.<br><br>Username: @{}:disqus<br>Reason: {}<br>Banned By: {}<br>Evidence: <spoiler>{}</spoiler>'''.format(self.user, self.reason, self.mod, self.message)
             
             url_post = 'https://disqus.com/api/3.0/posts/create.json?api_key={}&thread={}&access_token={}&message={}'.format(API_KEY,
                                                                                                                             6292105195,
