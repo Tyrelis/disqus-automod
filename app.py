@@ -264,14 +264,15 @@ def checkcomment(comment_id):
       user_data = {
               'display_name':response['response']['author']['name'],
               'username':response['response']['author']['username'],
-              'content':response['response']['message'],
+              'content':response['response']['message'].replace('&amp;', '&'),
               'upvotes':response['response']['likes'],
               'downvotes':response['response']['likes'],
             }
 
       return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
-    except:
+    except Exception as e:
+      print(e)
       return redirect(url_for('not_found'))
   else:
     error = "Unauthorized Access."

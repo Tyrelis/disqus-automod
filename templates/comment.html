@@ -40,11 +40,11 @@
                 </div>
                 {% if user_data %}
                 <div class="text-white">
-                  <label>Display Name: {{user_data['display_name']}}</label><br>
-                  <label>Username: {{user_data['username']}}</label><br>
-                  <label>Content: {{user_data['content']}}</label><br>
-                  <label>Upvotes: {{user_data['upvotes']}}</label><br>
-                  <label>Downvotes: {{user_data['downvotes']}}</label>
+                  <br>
+                  <p><label>Display Name: <b>{{user_data['display_name']}}</b><br>
+                  Username: <b>{{user_data['username']}}</b></label><br></p>
+                  </p><label>Content: {{user_data['content']}}</label><br></p>
+                  </p><label>Upvotes: <b>{{user_data['upvotes']}}</b></label> || <label>Downvotes: </b>{{user_data['downvotes']}}</b></label></p>
                 </div>
                 {% endif %}
                 <button type="button" class="btn float-left btn-warning" data-toggle="modal" data-target="#timeoutModal">Issue Timeout</button>
