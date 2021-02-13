@@ -241,6 +241,10 @@ def viewcomment():
 def checkcomment(comment_id):
   if session.get('name'):
     try:
+
+      #if request.method == "POST":
+        
+
       try:
         if request.method == "POST":
           comment_id = request.form['comment_id']
