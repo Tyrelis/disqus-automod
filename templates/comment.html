@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>View Comment</title>
+    <title>Check Comment</title>
 
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -75,19 +75,23 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="input-group form-group">
-              <input type="text" class="form-control" name="timeout_reason" placeholder="reason" required>
+            <form class="form-checkcomment" method="POST">
+              <div class="form-group">
+                <div class="input-group form-group">
+                  <input type="text" class="form-control" name="timeout_reason" placeholder="reason" required>
+                </div>
+                <div class="input-group form-group">
+                  <input type="password" class="form-control" name="timeout_duration" placeholder="enter timeout duration (in days)" required>
+                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <input type="submit" id="judgement" value="Issue Timeout" class="btn btn-warning">
+              </div>
             </div>
-            <div class="input-group form-group">
-              <input type="password" class="form-control" name="timeout_duration" placeholder="enter timeout duration (in days)" required>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <input type="submit" id="judgement" value="Issue Timeout" class="btn btn-warning">
-          </div>
+          </form>
         </div>
       </div>
+    </div>
     </div>
 
     <!-- Ban Modal -->
