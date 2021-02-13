@@ -6,7 +6,7 @@ import json
 import bcrypt
 import datetime
 
-webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808249420750520351/7S3GqGkalYuzmNi8M9x6dU3KGjeR40sTbVv0d4ROSwtO_HbrjpBItAuiKfAtCMHtoEuI')
+webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
 
 API_KEY = 'LwMepQiQSd2tOCueHzk5rS4fPXA9fgdlpwPHAEvxYHMpQYPkfmhFw7PpRSa5lmsR'
 access_token = 'a0f18fb3e52643eeb79ee4e5535bed88'
@@ -39,9 +39,9 @@ class DiscordAlert:
             raise Exception
         
         self.user = response['response']['author']['username']
-        self.comment_id = comment_id
+        self.comment_id = int(comment_id)
         self.reason = reason
-        self.timeout_days = timeout
+        self.timeout_days = int(timeout)
         self.message = response['response']['message']
         self.editabletime = response['response']['editableUntil']
         self.mod = session.get('name')
@@ -55,7 +55,7 @@ class DiscordAlert:
 
         embed.add_embed_field(name="User", value=self.user)
         embed.add_embed_field(name="Comment ID", value=self.comment_id)
-        embed.add_embed_field(name="Timeout Duration", value=self.timeout_days+" Days")
+        embed.add_embed_field(name="Timeout Duration", value="{} Days".format(self.timeout_days))
         embed.add_embed_field(name="Reason", value=self.reason)
         embed.add_embed_field(name="Moderator", value=self.mod)
 
@@ -75,7 +75,7 @@ class DiscordAlert:
         webhook.add_embed(embed)
         response = webhook.execute()
         
-    def warn(self): 
+    def timeout(self): 
         
         time_diff = datetime.datetime.strptime(self.editabletime, '%Y-%m-%dT%H:%M:%S') - datetime.datetime.now()
         time_diff = time_diff.total_seconds()
@@ -125,6 +125,9 @@ class DiscordAlert:
             
         self.deleted = requests.post(url_delete_comment)
         self.banned = requests.post(url_ban_user)
+
+        print("Deleted = {}".format(self.deleted))
+        print("Banned = {}".format(self.banned))
         
         self.send_alert_timeout()
 
@@ -224,9 +227,6 @@ def viewcomment():
           if response['response']['forum'] != '9anime-to':
             raise Exception
 
-          #alert = DiscordAlert(comment_id, reason="lolz", timeout=3)
-          #alert.send_alert_timeout()
-
           return redirect(url_for('checkcomment', comment_id = comment_id))
         except Exception as e:
           print(e)
@@ -237,11 +237,38 @@ def viewcomment():
     error = "Unauthorized Access."
     return render_template("login.html", error=error)
 
+
 @app.route('/checkcomment/<int:comment_id>/', methods=["POST", "GET"])
 def checkcomment(comment_id):
   if session.get('name'):
     try:
+
+      if 'timeout_btn' in request.form:
+        
+        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
+            
+        response = requests.get(url)
+        response = json.loads(response.text)
+
+        user_data = {
+              'display_name':response['response']['author']['name'],
+              'username':response['response']['author']['username'],
+              'content':response['response']['message'].replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>'),
+              'upvotes':response['response']['likes'],
+              'downvotes':response['response']['likes'],
+            }
+        
+        discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'])
+        discord_alert.timeout()
+
+        success = "Timeout Issued"
+        return render_template("comment.html", comment_id = comment_id, user_data = user_data, success=success)
+
+      if 'ban_btn' in request.form:
+        return str(request.form['ban_reason'])
+
       try:
+
         if request.method == "POST":
           comment_id = request.form['comment_id']
           comment_id = int(comment_id)
@@ -258,6 +285,7 @@ def checkcomment(comment_id):
 
       except Exception as e:
         error = "Invalid Comment ID"
+        print(e)
         return render_template('viewcomment.html', error=error)
 
       comment_id = int(comment_id)

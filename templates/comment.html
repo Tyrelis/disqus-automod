@@ -35,6 +35,11 @@
               <center>{{error}}</center>
             </div>
             {% endif %}
+            {% if success %}
+            <div class="alert alert-success">
+              <center>{{success}}</center>
+            </div>
+            {% endif %}
             <form class="form-checkcomment" action="/checkcomment/{{ comment_id }}/" method="POST">
               <div class="form-group">
                 <div class="input-group">
@@ -75,7 +80,7 @@
               </button>
             </div>
           <div class="modal-body">
-              <form class="form-checkcomment" action="" method="POST">
+              <form class="form-checkcomment" method="POST">
                 <div class="form-group">
                   <div class="input-group form-group">
                     <input type="text" class="form-control" name="timeout_reason" placeholder="reason" required>
@@ -105,7 +110,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="form-checkcomment" action="" method="POST">
+            <form class="form-checkcomment" method="POST">
               <div class="form-group">
                 <div class="input-group form-group">
                   <input type="text" class="form-control" name="ban_reason" placeholder="reason" required>
