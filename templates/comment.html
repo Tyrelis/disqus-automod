@@ -43,7 +43,7 @@
                   <br>
                   <p><label>Display Name: <b>{{user_data['display_name']}}</b><br>
                   Username: <b>{{user_data['username']}}</b></label><br></p>
-                  </p><label>Content: {{user_data['content']}}</label><br></p>
+                  </p><label>Content: {{user_data['content']|safe}}</label><br></p>
                   </p><label>Upvotes: <b>{{user_data['upvotes']}}</b></label> || <label>Downvotes: </b>{{user_data['downvotes']}}</b></label></p>
                 </div>
                 {% endif %}
