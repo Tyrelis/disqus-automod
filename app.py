@@ -290,7 +290,7 @@ def checkcomment(comment_id):
 
 @app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
-  return render_template("viewuser.html")
+  return "To be completed"
 
 
 @app.route('/404')
