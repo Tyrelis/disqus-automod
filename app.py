@@ -55,7 +55,7 @@ class DiscordAlert:
 
         embed.add_embed_field(name="User", value=self.user)
         embed.add_embed_field(name="Comment ID", value=self.comment_id)
-        embed.add_embed_field(name="Timeout Duration", value=self.timeout_days)
+        embed.add_embed_field(name="Timeout Duration", value=self.timeout_days+" Days")
         embed.add_embed_field(name="Reason", value=self.reason)
         embed.add_embed_field(name="Moderator", value=self.mod)
 
@@ -192,6 +192,7 @@ def register():
         session['name'] = request.form['name']
         return redirect(url_for('login'))
 '''
+
 
 @app.route('/choice', methods=["POST", "GET"])
 def choice():
