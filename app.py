@@ -45,7 +45,7 @@ class DiscordAlert:
         self.timeout_days = int(timeout)
 
         cleanr = re.compile('<.p*?>')
-        message = re.sub(cleanr, '', response['response']['message'])
+        message = re.sub(cleanr, '', response['response']['message'].replace('&amp;', 'and').replace('&lt;', '<').replace('&gt;', '>'))
 
         self.message = message
         self.editabletime = response['response']['editableUntil']
