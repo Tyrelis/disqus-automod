@@ -5,6 +5,7 @@ import requests
 import json
 import bcrypt
 import datetime
+import re
 
 webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
 
@@ -42,7 +43,11 @@ class DiscordAlert:
         self.comment_id = int(comment_id)
         self.reason = reason
         self.timeout_days = int(timeout)
-        self.message = response['response']['message']
+
+        cleanr = re.compile('<.p*?>')
+        message = re.sub(cleanr, '', response['response']['message'])
+
+        self.message = message
         self.editabletime = response['response']['editableUntil']
         self.mod = session.get('name')
         print(self.mod)
@@ -105,7 +110,7 @@ class DiscordAlert:
             self.upvoted = requests.post(url_vote)
             
         else: 
-            timeout_message = '''Your comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a>.<br><br>You have been given a TimeOut ban for {} Day(s) and ONE warning point. If you're given TWO warning points within the next 30 days, you will be banned.<br><br>Username: @{}:disqus<br>Warned By: {}<br>Reason: {}<br>Evidence:{}'''.format(self.timeout_days, self.user, self.mod, self.reason, self.message)
+            timeout_message = '''Your comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a>.<br><br>You have been given a TimeOut ban for {} Day(s) and ONE warning point. If you're given TWO warning points within the next 30 days, you will be banned.<br><br>Username: @{}:disqus<br>Warned By: {}<br>Reason: {}<br>Your Comment: <spoiler>{}</spoiler>'''.format(self.timeout_days, self.user, self.mod, self.reason, self.message)
             
             url_post = 'https://disqus.com/api/3.0/posts/create.json?api_key={}&thread={}&access_token={}&message={}'.format(API_KEY,
                                                                                                                             6292105195,
@@ -158,7 +163,7 @@ class DiscordAlert:
             self.upvoted = requests.post(url_vote)
             
         else: 
-            ban_message = '''This comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been banned.<br><br>Username: @{}:disqus<br>Reason: {}<br>Banned By: {}<br>Evidence: <spoiler>{}</spoiler>'''.format(self.user, self.reason, self.mod, self.message)
+            ban_message = '''This comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been banned.<br><br>Username: @{}:disqus<br>Reason: {}<br>Banned By: {}<br>Your Comment: <spoiler>{}</spoiler>'''.format(self.user, self.reason, self.mod, self.message)
             
             url_post = 'https://disqus.com/api/3.0/posts/create.json?api_key={}&thread={}&access_token={}&message={}'.format(API_KEY,
                                                                                                                             6292105195,
