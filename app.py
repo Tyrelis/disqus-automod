@@ -373,6 +373,13 @@ def checkcomment(comment_id):
               'upvotes':response['response']['likes'],
               'downvotes':response['response']['likes'],
             }
+      
+      curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+      curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '9animedb') AND (TABLE_NAME = '{}')".format(user_data['username']))
+      user = curl.fetchone()
+
+      print(user['count(*)'])
+      curl.close()
 
       return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
