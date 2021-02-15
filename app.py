@@ -375,13 +375,20 @@ def checkcomment(comment_id):
             }
       
       curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-      curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '9animedb') AND (TABLE_NAME = '{}')".format(user_data['username']))
+      curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
       user = curl.fetchone()
-
-      print(user['count(*)'])
       curl.close()
 
-      return render_template("comment.html", comment_id = comment_id, user_data = user_data)
+      user = user['count(*)']
+
+      if user:
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("SELECT * FROM '{}'".format(user_data['username']))
+        user = curl.fetchone()
+        curl.close()
+        return "User exists"
+      else:
+        return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
     except Exception as e:
       print(e)
