@@ -1,13 +1,11 @@
 from flask import *
 from flask_mysqldb import MySQL, MySQLdb
-from discord_webhook import DiscordWebhook, DiscordEmbed, webhook
+from discord_webhook import DiscordWebhook, DiscordEmbed
 import requests
 import json
 import bcrypt
 import datetime
 import re
-
-webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
 
 API_KEY = 'LwMepQiQSd2tOCueHzk5rS4fPXA9fgdlpwPHAEvxYHMpQYPkfmhFw7PpRSa5lmsR'
 access_token = 'a0f18fb3e52643eeb79ee4e5535bed88'
@@ -54,6 +52,9 @@ class DiscordAlert:
         self.comment_url = 'https://9anime-to.disqus.com/admin/moderate/all/search/id:{}'.format(comment_id)
 
     def send_alert_timeout(self):
+
+        webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
+
         embed = DiscordEmbed(title='Timeout Issued', color=0x5A2E98)
 
         embed.set_author(name="View Comment", url=self.comment_url)
@@ -70,6 +71,9 @@ class DiscordAlert:
         print("Timeout Sent = {}".format(session.get('name')))
         
     def send_alert_ban(self):
+
+        webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
+        
         embed = DiscordEmbed(title='Permanent Ban Issued', color=0x5A2E98)
 
         embed.set_author(name="View Comment", url=self.comment_url)
