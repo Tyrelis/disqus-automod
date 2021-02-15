@@ -48,6 +48,13 @@
                     <input type="submit" value="Search Comment" class="btn float-left btn-warning">
                   </div>
                 </div>
+                {% if ban_info %}
+                <div class="text-red">
+                  <p class="d-flex justify-content-center">
+                    <label>{{user_data['display_name']}} was </label>
+                  </p>
+                </div>
+                {% endif %}
                 {% if user_data %}
                 <div class="text-white">
                   <br>
