@@ -66,6 +66,8 @@ class DiscordAlert:
 
         webhook.add_embed(embed)
         response = webhook.execute()
+
+        print("Timeout Sent = {}".format(session.get('name')))
         
     def send_alert_ban(self):
         embed = DiscordEmbed(title='Permanent Ban Issued', color=0x5A2E98)
@@ -79,6 +81,8 @@ class DiscordAlert:
 
         webhook.add_embed(embed)
         response = webhook.execute()
+
+        print("Ban Sent = {}".format(session.get('name')))
         
     def timeout(self): 
         
