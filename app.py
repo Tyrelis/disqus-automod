@@ -425,9 +425,12 @@ def checkcomment(comment_id):
         user = curl.fetchone()
         curl.close()
 
+        wait_period = (user['log_date'] + datetime.timedelta(days = 30))
+
         user['log_date'] = user['log_date'].strftime("%B %d, %Y")
 
-        return render_template("comment.html", comment_id = comment_id, user_data = user_data, ban_info = user)
+        if wait_period >= datetime.datetime.now() or user['permaban'] == 1:
+          return render_template("comment.html", comment_id = comment_id, user_data = user_data, ban_info = user)
       else:
         return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
