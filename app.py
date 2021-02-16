@@ -314,15 +314,18 @@ def checkcomment(comment_id):
         user = curl.fetchone()
         curl.close()
 
+        user = user['count(*)']
+
         if user:
           curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-          curl.execute("SELECT * FROM '{}'".format(user_data['username']))
-          user = curl.fetchone()
+          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ({}, {}, 0)".format(user_data['username'], session.get('name'), request.form['timeout_reason']))
+          mysql.connection.commit()
           curl.close()
         else:
           curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-          curl.execute("SELECT * FROM '{}'".format(user_data['username']))
-          user = curl.fetchone()
+          curl.execute("create table {}(id INT NOT NULL AUTO_INCREMENT, moderator VARCHAR(50) NOT NULL, reason VARCHAR(255) NOT NULL, permaban INT NOT NULL, log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id)))".format(user_data['username']))
+          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ({}, {}, 0)".format(user_data['username'], session.get('name'), request.form['timeout_reason']))
+          mysql.connection.commit()
           curl.close()
         
         discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'])
@@ -344,6 +347,25 @@ def checkcomment(comment_id):
               'upvotes':response['response']['likes'],
               'downvotes':response['response']['likes'],
             }
+        
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
+        user = curl.fetchone()
+        curl.close()
+
+        user = user['count(*)']
+
+        if user:
+          curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ({}, {}, 1)".format(user_data['username'], session.get('name'), request.form['timeout_reason']))
+          mysql.connection.commit()
+          curl.close()
+        else:
+          curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+          curl.execute("create table {}(id INT NOT NULL AUTO_INCREMENT, moderator VARCHAR(50) NOT NULL, reason VARCHAR(255) NOT NULL, permaban INT NOT NULL, log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id)))".format(user_data['username']))
+          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ({}, {}, 1)".format(user_data['username'], session.get('name'), request.form['timeout_reason']))
+          mysql.connection.commit()
+          curl.close()
         
         discord_alert = DiscordAlert(comment_id, reason=request.form['ban_reason'])
         discord_alert.ban()
@@ -399,10 +421,12 @@ def checkcomment(comment_id):
 
       if user:
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        curl.execute("SELECT * FROM '{}'".format(user_data['username']))
+        curl.execute("SELECT reason, moderator, permaban, MAX(log_date) from {}".format(user_data['username']))
         user = curl.fetchone()
         curl.close()
-        return "User exists"
+
+        print(user)
+        return render_template("comment.html", comment_id = comment_id, user_data = user_data)
       else:
         return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
