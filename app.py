@@ -429,6 +429,8 @@ def checkcomment(comment_id):
 
         user['log_date'] = user['log_date'].strftime("%B %d, %Y")
 
+        print(user)
+
         if (wait_period >= datetime.datetime.now()) or (user['permaban'] == 1):
           return render_template("comment.html", comment_id = comment_id, user_data = user_data, ban_info = user)
       else:

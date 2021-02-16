@@ -51,7 +51,7 @@
                 {% if ban_info %}
                 <div class="text-danger d-flex justify-content-center">
                   {% if ban_info['permaban'] == 0 %}
-                  <label><br><b><i>{{user_data['username']}}</i></b> was timedout within last 30 days for <b><i>{{ban_info['reason']}}</i></b> by <b><i>{{ban_info['moderator']}}</i></b> on <b><i>{{ban_info['MAX(log_date)']}}</i></b>.</label>
+                  <label><br><b><i>{{user_data['username']}}</i></b> was timedout within last 30 days for <b><i>{{ban_info['reason']}}</i></b> by <b><i>{{ban_info['moderator']}}</i></b> on <b><i>{{ban_info['log_date']}}</i></b>.</label>
                   {% endif %}
                   {% if ban_info['permaban'] == 1 %}
                   <p><br><b><i>{{user_data['username']}}</i></b> was permanently for <b><i>{{ban_info['reason']}}</i></b> by <b><i>{{ban_info['moderator']}}</i></b> on <b><i>{{ban_info['log_date']}}</i></b>.<br>
