@@ -49,11 +49,8 @@
                   </div>
                 </div>
                 {% if ban_info %}
-                <div class="text-red">
-                  <br>
-                  <p class="d-flex justify-content-center">
-                    <label>{{user_data['display_name']}} was warned within last 30 days on {{user_data['date']}}.</label>
-                  </p>
+                <div class="text-danger d-flex justify-content-center">
+                  <label><br><b><i>{{user_data['username']}}</i></b> was timedout within last 30 days for <b><i>{{ban_info['reason']}}</i></b> by <b><i>{{ban_info['moderator']}}</i></b> on <b><i>{{ban_info['MAX(log_date)']}}</i></b>.</label>
                 </div>
                 {% endif %}
                 {% if user_data %}

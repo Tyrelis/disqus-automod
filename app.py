@@ -425,8 +425,7 @@ def checkcomment(comment_id):
         user = curl.fetchone()
         curl.close()
 
-        print(user)
-        return render_template("comment.html", comment_id = comment_id, user_data = user_data)
+        return render_template("comment.html", comment_id = comment_id, user_data = user_data, ban_info = user)
       else:
         return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
