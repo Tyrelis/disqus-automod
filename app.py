@@ -421,9 +421,11 @@ def checkcomment(comment_id):
 
       if user:
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        curl.execute("SELECT reason, moderator, permaban, MAX(log_date) from {}".format(user_data['username']))
+        curl.execute("SELECT * from {} ORDER BY log_date DESC LIMIT 1".format(user_data['username']))
         user = curl.fetchone()
         curl.close()
+
+        user['log_date'] = user['log_date'].strftime("%B %d, %Y")
 
         return render_template("comment.html", comment_id = comment_id, user_data = user_data, ban_info = user)
       else:
