@@ -308,6 +308,22 @@ def checkcomment(comment_id):
               'upvotes':response['response']['likes'],
               'downvotes':response['response']['likes'],
             }
+
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
+        user = curl.fetchone()
+        curl.close()
+
+        if user:
+          curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+          curl.execute("SELECT * FROM '{}'".format(user_data['username']))
+          user = curl.fetchone()
+          curl.close()
+        else:
+          curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+          curl.execute("SELECT * FROM '{}'".format(user_data['username']))
+          user = curl.fetchone()
+          curl.close()
         
         discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'])
         discord_alert.timeout()
