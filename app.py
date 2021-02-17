@@ -306,7 +306,7 @@ def checkcomment(comment_id):
               'username':response['response']['author']['username'],
               'content':response['response']['message'].replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>'),
               'upvotes':response['response']['likes'],
-              'downvotes':response['response']['likes'],
+              'downvotes':response['response']['dislikes'],
             }
 
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -345,7 +345,7 @@ def checkcomment(comment_id):
               'username':response['response']['author']['username'],
               'content':response['response']['message'].replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>'),
               'upvotes':response['response']['likes'],
-              'downvotes':response['response']['likes'],
+              'downvotes':response['response']['dislikes'],
             }
         
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
