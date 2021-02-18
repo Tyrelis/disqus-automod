@@ -417,7 +417,10 @@ def checkcomment(comment_id):
       user = curl.fetchone()
       curl.close()
 
-      user = user['count(*)']
+      try:
+        user = user['count(*)']
+      except:
+        return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
       if user:
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
