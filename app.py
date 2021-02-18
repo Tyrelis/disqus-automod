@@ -436,6 +436,8 @@ def checkcomment(comment_id):
 
         if (wait_period >= datetime.datetime.now()) or (user['permaban'] == 1):
           return render_template("comment.html", comment_id = comment_id, user_data = user_data, ban_info = user)
+        else:
+          return render_template("comment.html", comment_id = comment_id, user_data = user_data)
       else:
         return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
