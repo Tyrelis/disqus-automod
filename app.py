@@ -6,16 +6,19 @@ import json
 import bcrypt
 import datetime
 import re
+import yaml
 
-API_KEY = 'LwMepQiQSd2tOCueHzk5rS4fPXA9fgdlpwPHAEvxYHMpQYPkfmhFw7PpRSa5lmsR'
-access_token = 'a0f18fb3e52643eeb79ee4e5535bed88'
+db = yaml.load(open('db.yaml'))
+
+API_KEY = db['API_KEY']
+access_token = db['access_token']
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_HOST'] = db['HOST']
+app.config['MYSQL_USER'] = db['USER']
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = '9animedb'
+app.config['MYSQL_DB'] = db['DB']
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
@@ -53,7 +56,7 @@ class DiscordAlert:
 
     def send_alert_timeout(self):
 
-        webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
+        webhook = DiscordWebhook(url=db['WEBHOOK'])
 
         embed = DiscordEmbed(title='Timeout Issued', color=0x5A2E98)
 
@@ -72,7 +75,7 @@ class DiscordAlert:
         
     def send_alert_ban(self):
 
-        webhook = DiscordWebhook(url='https://discord.com/api/webhooks/808262501468078080/S9yHoMFDxedcrxQRp2vbZnc2ctAQttVD70X9EGr_d5HlykAVOaBMNSBpmy2BJzssoMt8')
+        webhook = DiscordWebhook(url=db['WEBHOOK'])
         
         embed = DiscordEmbed(title='Permanent Ban Issued', color=0x5A2E98)
 
