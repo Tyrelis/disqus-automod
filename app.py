@@ -8,7 +8,7 @@ import datetime
 import re
 import yaml
 
-db = yaml.load(open('db.yaml'))
+db = yaml.load(open('db.yaml'), Loader=yaml.FullLoader)
 
 API_KEY = db['API_KEY']
 access_token = db['access_token']
