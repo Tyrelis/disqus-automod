@@ -416,14 +416,21 @@ def checkcomment(comment_id):
             }
       
       curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-      curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
+      #curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
+      print(user_data['username'])
+      curl.execute("SHOW TABLES LIKE '{}'".format(user_data['username']))
       user = curl.fetchone()
       curl.close()
 
-      try:
-        user = user['count(*)']
-      except:
-        return render_template("comment.html", comment_id = comment_id, user_data = user_data)
+      if user:
+        print("confirmed")
+      else:
+        print("None print")
+
+      #try:
+      #  user = user['count(*)']
+      #except:
+      #  return render_template("comment.html", comment_id = comment_id, user_data = user_data)
 
       if user:
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
