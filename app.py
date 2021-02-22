@@ -366,7 +366,7 @@ def checkcomment(comment_id):
         else:
           curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
           curl.execute("create table {}(id INT NOT NULL AUTO_INCREMENT, moderator VARCHAR(50) NOT NULL, reason VARCHAR(255) NOT NULL, permaban INT NOT NULL, log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id))".format(user_data['username']))
-          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ('{}', '{}', 1)".format(user_data['username'], session.get('name'), request.form['timeout_reason']))
+          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ('{}', '{}', 1)".format(user_data['username'], session.get('name'), request.form['ban_reason']))
           mysql.connection.commit()
           curl.close()
         
