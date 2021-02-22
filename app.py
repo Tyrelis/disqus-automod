@@ -360,7 +360,7 @@ def checkcomment(comment_id):
 
         if user:
           curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ('{}', '{}', 1)".format(user_data['username'], session.get('name'), request.form['timeout_reason']))
+          curl.execute("INSERT INTO {}(moderator, reason, permaban) VALUES ('{}', '{}', 1)".format(user_data['username'], session.get('name'), request.form['ban_reason']))
           mysql.connection.commit()
           curl.close()
         else:
