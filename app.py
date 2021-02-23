@@ -336,6 +336,19 @@ def checkcomment(comment_id):
         discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'])
         discord_alert.timeout()
 
+        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
+            
+        response = requests.get(url)
+        response = json.loads(response.text)
+
+        user_data = {
+              'display_name':response['response']['author']['name'],
+              'username':response['response']['author']['username'],
+              'content':response['response']['message'].replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>'),
+              'upvotes':response['response']['likes'],
+              'downvotes':response['response']['dislikes'],
+            }
+
         success = "Timeout Issued"
         return render_template("comment.html", comment_id = comment_id, user_data = user_data, success=success)
 
@@ -374,6 +387,19 @@ def checkcomment(comment_id):
         
         discord_alert = DiscordAlert(comment_id, reason=request.form['ban_reason'])
         discord_alert.ban()
+
+        url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
+            
+        response = requests.get(url)
+        response = json.loads(response.text)
+
+        user_data = {
+              'display_name':response['response']['author']['name'],
+              'username':response['response']['author']['username'],
+              'content':response['response']['message'].replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>'),
+              'upvotes':response['response']['likes'],
+              'downvotes':response['response']['dislikes'],
+            }
 
         success = "Permanent Ban Issued"
         return render_template("comment.html", comment_id = comment_id, user_data = user_data, success=success)
