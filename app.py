@@ -514,8 +514,8 @@ def viewuser():
     return render_template("login.html", error=error)
 
 @app.route('/checkuser/<username>/', methods=["POST", "GET"])
-def checkuser():
-  return "to be completed"
+def checkuser(username):
+  return username
 
 
 @app.route('/404')
