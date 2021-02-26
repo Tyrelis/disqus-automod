@@ -487,31 +487,35 @@ def checkcomment(comment_id):
     return render_template("login.html", error=error)
 
 
-'''@app.route('/viewuser', methods=["POST", "GET"])
+@app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
   if session.get('name'):
     error = None
     if request.method == "POST":
         try:
-          comment_id = int(request.form['comment_id'])
+          username = request.form['username']
 
-          url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
+          url = 'https://disqus.com/api/3.0/users/details.json?api_key={}&user=username:{}&access_token={}'.format(API_KEY, username, access_token)
           
           response = requests.get(url)
           response = json.loads(response.text)
 
-          if response['response']['forum'] != '9anime-to':
+          if response['code'] != 0:
             raise Exception
 
-          return redirect(url_for('checkcomment', comment_id = comment_id))
+          return redirect(url_for('checkuser', username = username))
         except Exception as e:
           print(e)
-          error = "Invalid Comment ID"
-          return render_template('viewcomment.html', error=error)
-    return render_template("viewcomment.html")
+          error = "User doesn't exist"
+          return render_template('viewuser.html', error=error)
+    return render_template("viewuser.html")
   else:
     error = "Unauthorized Access."
-    return render_template("login.html", error=error)'''
+    return render_template("login.html", error=error)
+
+@app.route('/checkuser/<username>/', methods=["POST", "GET"])
+def checkuser():
+  return "to be completed"
 
 
 @app.route('/404')
