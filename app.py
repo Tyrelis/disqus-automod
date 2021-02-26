@@ -487,9 +487,31 @@ def checkcomment(comment_id):
     return render_template("login.html", error=error)
 
 
-@app.route('/viewuser', methods=["POST", "GET"])
+'''@app.route('/viewuser', methods=["POST", "GET"])
 def viewuser():
-  return "To be completed"
+  if session.get('name'):
+    error = None
+    if request.method == "POST":
+        try:
+          comment_id = int(request.form['comment_id'])
+
+          url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
+          
+          response = requests.get(url)
+          response = json.loads(response.text)
+
+          if response['response']['forum'] != '9anime-to':
+            raise Exception
+
+          return redirect(url_for('checkcomment', comment_id = comment_id))
+        except Exception as e:
+          print(e)
+          error = "Invalid Comment ID"
+          return render_template('viewcomment.html', error=error)
+    return render_template("viewcomment.html")
+  else:
+    error = "Unauthorized Access."
+    return render_template("login.html", error=error)'''
 
 
 @app.route('/404')
