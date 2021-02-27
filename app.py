@@ -546,7 +546,7 @@ def checkuser(username):
         raise Exception
 
       username = response['response']['username']
-      
+
       curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
       #curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
       curl.execute("SHOW TABLES LIKE '{}'".format(username))
@@ -554,6 +554,13 @@ def checkuser(username):
       curl.close()
 
       if user:
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("SELECT * from {} ORDER BY log_date DESC".format(username))
+        user = curl.fetchall()
+        curl.close()
+
+        for i in user:
+          print(i)
         return 'Lol '+username
       else:
         return render_template("user.html", username = username, no_moderation = True)
