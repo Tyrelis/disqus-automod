@@ -48,15 +48,10 @@
                     <input type="submit" value="Search User" class="btn float-left btn-warning">
                   </div>
                 </div>
-                {% if ban_info %}
+                {% if no_moderation %}
                 <div class="text-danger d-flex justify-content-center">
-                  {% if ban_info['permaban'] == 0 %}
-                  <label><br><b><i>{{user_data['username']}}</i></b> was timedout within last 30 days for <b><i>{{ban_info['reason']}}</i></b> by <b><i>{{ban_info['moderator']}}</i></b> on <b><i>{{ban_info['log_date']}}</i></b>.</label>
-                  {% endif %}
-                  {% if ban_info['permaban'] == 1 %}
-                  <p><br><b><i>{{user_data['username']}}</i></b> was permanently banned for <b><i>{{ban_info['reason']}}</i></b> by <b><i>{{ban_info['moderator']}}</i></b> on <b><i>{{ban_info['log_date']}}</i></b>.<br>
-                  Issuing a timeout will replace their permanent ban with a timeout ban.</p>
-                  {% endif %}
+                  <label><br><b><i>{{username}}</i></b> has no previous moderation history.</label>
+                {% endif %}
                 </div>
                 {% endif %}
                 {% if user_data %}
@@ -71,8 +66,8 @@
                              Downvotes: <b>{{user_data['downvotes']}}</b></label></p>
                 </div>
                 {% endif %}
-                <input type="button" value="Issue Timeout" class="btn float-left btn-warning" data-toggle="modal" data-target="#timeoutModal">
-                <input type="button" value="Issue Ban" class="btn float-right btn-warning" data-toggle="modal" data-target="#banModal">
+          <!--      <input type="button" value="Issue Timeout" class="btn float-left btn-warning" data-toggle="modal" data-target="#timeoutModal">
+                <input type="button" value="Issue Ban" class="btn float-right btn-warning" data-toggle="modal" data-target="#banModal">-->
              </div>
             </form>
           </div>

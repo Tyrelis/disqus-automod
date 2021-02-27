@@ -540,7 +540,16 @@ def checkuser(username):
       if response['code'] != 0:
         raise Exception
 
-      
+      curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+      #curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
+      curl.execute("SHOW TABLES LIKE '{}'".format(username))
+      user = curl.fetchone()
+      curl.close()
+
+      if user:
+        return 'Lol '+username
+      else:
+        return render_template("user.html", username = username, no_moderation = True)
 
     except Exception as e:
       print(e)
