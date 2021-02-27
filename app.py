@@ -578,16 +578,30 @@ def checkuser(username):
 @app.route('/deleteuser/<username>/<int:id>/', methods=["POST", "GET"])
 def deleteuser(username, id):
   if session.get('name'):
-    print(username)
-    print(id)
+    try:
+      curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+      curl.execute("SELECT * FROM {}".format(username))
+      user = curl.fetchall()
+      curl.close()
 
-    curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    curl.execute("SHOW count(*) FROM '{}'".format(username))
-    user = curl.fetchone()
-    curl.close()
+      if len(user) == 1:
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("DROP TABLE {}".format(username))
+        mysql.connection.commit()
+        curl.close()
 
-    print(user)
+        return redirect(url_for('checkuser', username = username))
 
+      else:
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("DELETE FROM {} WHERE id={}".format(username, id))
+        mysql.connection.commit()
+        curl.close()
+
+        return redirect(url_for('checkuser', username = username))
+    except Exception as e:
+      print(e)
+      return redirect(url_for('not_found'))    
   else:
     error = "Unauthorized Access."
     return render_template("login.html", error=error)
