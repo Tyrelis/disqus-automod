@@ -54,15 +54,33 @@
                 {% endif %}
                 </div>
                 {% if user_data %}
-                <div class="text-white">
+                <div class="text-white table-responsive">
                   <br>
-                  <p><label>Display Name: <b>{{user_data['display_name']}}</b><br>
-                            Username: <b>{{user_data['username']}}</b></label><br></p>
-
-                  </p><label>Content: {{user_data['content']|safe}}</label><br></p>
-
-                  </p><label>Upvotes: <b>{{user_data['upvotes']}}</b><br>
-                             Downvotes: <b>{{user_data['downvotes']}}</b></label></p>
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Action Date</th>
+                            <th>Reason</th>
+                            <th>Permanent Ban</th>
+                            <th>Moderator</th>
+                        <tr>
+                    </thead>
+                    <tbody>
+                        {% for user in user_data %}
+                        <tr>
+                            <td>{{ user['log_date'] }}</td>
+                            <td>{{ user['reason'] }}</td>
+                            {% if user['permaban'] %}
+                                <td>Yes</td>
+                            {% endif %}
+                            {% if user['permaban'] == 0 %}
+                                <td>No</td>
+                            {% endif %}
+                            <td>{{ user['moderator'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
                 </div>
                 {% endif %}
                 <div class="text-danger">

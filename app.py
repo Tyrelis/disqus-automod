@@ -559,9 +559,12 @@ def checkuser(username):
         user = curl.fetchall()
         curl.close()
 
-        for i in user:
-          print(i)
-        return 'Lol '+username
+        #user['log_date'] = user['log_date'].strftime("%B %d, %Y")
+
+        for user_data in user:
+          user_data['log_date'] = user_data['log_date'].strftime("%B %d, %Y")
+
+        return render_template("user.html", username = username, user_data = user)
       else:
         return render_template("user.html", username = username, no_moderation = True)
 
