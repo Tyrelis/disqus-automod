@@ -12,6 +12,12 @@ height: 100%;
 align-content: center;
 }
 
+.navbar{
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
 .card{
 height: auto;
 margin-top: auto;

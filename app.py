@@ -244,6 +244,38 @@ def logout():
     error = "You need to login to log out."
     return render_template("login.html", error=error)
 
+@app.route('/changepassword/', methods=["POST", "GET"])
+def changepassword():
+  if session.get('name'):
+
+    if request.method == "POST":
+      current_password = request.form['current_password'].encode('utf-8')
+
+      try:
+        curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        curl.execute("SELECT * FROM mods WHERE username=%s",(session.get('name'),))
+        user = curl.fetchone()
+        curl.close()
+
+        if user:
+          if bcrypt.hashpw(current_password, user["password"].encode('utf-8')) == user["password"].encode('utf-8'):
+            print("Same password")
+            return redirect(url_for('choice'))
+          else:
+            error = "Incorrect Password"
+            return render_template("changepassword.html", error=error)
+        else:
+          error = "Incorrect Password"
+          return render_template("changepassword.html", error=error)
+      except Exception as e:
+        print(e)
+        return render_template("changepassword.html", error=error)
+
+    return render_template("changepassword.html")
+  else:
+    error = "Unauthorized Access."
+    return render_template("changepassword.html", error=error)
+
 
 '''@app.route('/register', methods=["POST", "GET"])
 def register():
