@@ -245,6 +245,7 @@ def logout():
     error = "You need to login to log out."
     return render_template("login.html", error=error)
 
+
 @app.route('/changepassword/', methods=["POST", "GET"])
 def changepassword():
   error = None
