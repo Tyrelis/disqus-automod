@@ -486,6 +486,33 @@ def checkcomment(comment_id):
 def viewuser():
   if session.get('name'):
     error = None
+    
+    if request.method == "POST":
+      try:
+        username = request.form['username']
+
+        url = 'https://disqus.com/api/3.0/users/details.json?api_key={}&user=username:{}&access_token={}'.format(API_KEY, username, access_token)
+            
+        response = requests.get(url)
+        response = json.loads(response.text)
+
+        if response['code'] != 0:
+          raise Exception
+
+        return redirect(url_for('checkuser', username = username))
+      except Exception as e:
+        print(e)
+        error = "User doesn't exist"
+        return render_template('viewuser.html', error=error)
+  else:
+    error = "Unauthorized Access."
+    return render_template("login.html", error=error)
+
+
+@app.route('/checkuser/<username>/', methods=["POST", "GET"])
+def checkuser(username):
+  if session.get('name'):
+    error = None
     try:
       if request.method == "POST":
           try:
@@ -504,37 +531,21 @@ def viewuser():
             print(e)
             error = "User doesn't exist"
             return render_template('viewuser.html', error=error)
+
+      url = 'https://disqus.com/api/3.0/users/details.json?api_key={}&user=username:{}&access_token={}'.format(API_KEY, username, access_token)
+            
+      response = requests.get(url)
+      response = json.loads(response.text)
       
+      if response['code'] != 0:
+        raise Exception
+
+      
+
     except Exception as e:
       print(e)
       return redirect(url_for('not_found'))
-  else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
 
-
-@app.route('/checkuser/<username>/', methods=["POST", "GET"])
-def checkuser(username):
-  if session.get('name'):
-    error = None
-    if request.method == "POST":
-        try:
-          username = request.form['username']
-
-          url = 'https://disqus.com/api/3.0/users/details.json?api_key={}&user=username:{}&access_token={}'.format(API_KEY, username, access_token)
-          
-          response = requests.get(url)
-          response = json.loads(response.text)
-
-          if response['code'] != 0:
-            raise Exception
-
-          return redirect(url_for('checkuser', username = username))
-        except Exception as e:
-          print(e)
-          error = "User doesn't exist"
-          return render_template('viewuser.html', error=error)
-    return render_template("viewuser.html")
   else:
     error = "Unauthorized Access."
     return render_template("login.html", error=error)
