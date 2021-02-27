@@ -26,18 +26,27 @@
     
     <body>
         <div class="container">
-            <nav class="navbar navbar-expand-lg">
+            <nav class="navbar navbar-expand-lg navbar-dark">
                 <a class="navbar-brand" href="{{ url_for('choice') }}">
                     <img src="{{url_for('static', filename='logo_front_page.png')}}" height="30">
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler btn btn-light" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="#">Features</a>
-                    <a class="nav-item nav-link" href="#">Pricing</a>
+                    <li><a class="nav-item nav-link" href="{{ url_for('viewcomment') }}">Check Comment</a></li>
+                    <li><a class="nav-item nav-link" href="{{ url_for('viewuser') }}">Check User</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{session['name']}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="#"><div class="text-dark">Change Password</div></a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#"><div class="text-danger">Log Out</div></a>
+                        </div>
+                      </li>
                   </div>
                 </div>
             </nav>
