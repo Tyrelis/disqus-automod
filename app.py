@@ -265,7 +265,7 @@ def changepassword():
             error = "Incorrect Password"
             return render_template("changepassword.html", error=error)
         else:
-          error = "Incorrect Password"
+          error = "An error occurred."
           return render_template("changepassword.html", error=error)
       except Exception as e:
         print(e)
