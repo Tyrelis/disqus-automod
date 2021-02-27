@@ -513,6 +513,7 @@ def viewuser():
     error = "Unauthorized Access."
     return render_template("login.html", error=error)
 
+
 @app.route('/checkuser/<username>/', methods=["POST", "GET"])
 def checkuser(username):
   if session.get('name'):
