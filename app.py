@@ -267,7 +267,7 @@ def choice():
     return render_template("login.html", error=error)
 
 
-@app.route('/viewcomment', methods=["POST", "GET"])
+@app.route('/viewcomment/', methods=["POST", "GET"])
 def viewcomment():
   if session.get('name'):
     error = None
@@ -482,7 +482,7 @@ def checkcomment(comment_id):
     return render_template("login.html", error=error)
 
 
-@app.route('/viewuser', methods=["POST", "GET"])
+@app.route('/viewuser/', methods=["POST", "GET"])
 def viewuser():
   if session.get('name'):
     error = None
