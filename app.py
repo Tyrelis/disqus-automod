@@ -455,11 +455,6 @@ def checkcomment(comment_id):
       else:
         print("None print")
 
-      #try:
-      #  user = user['count(*)']
-      #except:
-      #  return render_template("comment.html", comment_id = comment_id, user_data = user_data)
-
       if user:
         curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         curl.execute("SELECT * from {} ORDER BY log_date DESC LIMIT 1".format(user_data['username']))
