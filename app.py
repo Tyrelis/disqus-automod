@@ -259,8 +259,21 @@ def changepassword():
 
         if user:
           if bcrypt.hashpw(current_password, user["password"].encode('utf-8')) == user["password"].encode('utf-8'):
-            print("Same password")
-            return redirect(url_for('choice'))
+            new_password = request.form['new_password'].encode('utf-8')
+            confirm_password = request.form['confirm_password'].encode('utf-8')
+            
+            if new_password == confirm_password:
+              hash_password = bcrypt.hashpw(new_password, bcrypt.gensalt())
+
+              cur = mysql.connection.cursor()
+              cur.execute("UPDATE mods SET password = {} WHERE username = {}".format(hash_password, session.get('name')))
+              mysql.connection.commit()
+
+              success = "Password changed"
+              return render_template("changepassword.html", success=success)
+            else:
+              error = "New and confirm password must be same."
+            return render_template("changepassword.html", error=error)
           else:
             error = "Incorrect Password"
             return render_template("changepassword.html", error=error)
