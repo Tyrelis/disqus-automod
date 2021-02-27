@@ -499,6 +499,8 @@ def viewuser():
         if response['code'] != 0:
           raise Exception
 
+        username = response['response']['username']
+
         return redirect(url_for('checkuser', username = username))
       except Exception as e:
         print(e)
@@ -527,6 +529,8 @@ def checkuser(username):
             if response['code'] != 0:
               raise Exception
 
+            username = response['response']['username']
+
             return redirect(url_for('checkuser', username = username))
           except Exception as e:
             print(e)
@@ -541,6 +545,8 @@ def checkuser(username):
       if response['code'] != 0:
         raise Exception
 
+      username = response['response']['username']
+      
       curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
       #curl.execute("SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')".format(app.config['MYSQL_DB'], user_data['username']))
       curl.execute("SHOW TABLES LIKE '{}'".format(username))
