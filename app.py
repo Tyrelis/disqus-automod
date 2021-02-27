@@ -246,6 +246,7 @@ def logout():
 
 @app.route('/changepassword/', methods=["POST", "GET"])
 def changepassword():
+  error = None
   if session.get('name'):
 
     if request.method == "POST":
@@ -266,7 +267,7 @@ def changepassword():
               hash_password = bcrypt.hashpw(new_password, bcrypt.gensalt())
 
               cur = mysql.connection.cursor()
-              cur.execute("UPDATE mods SET password = {} WHERE username = {}".format(hash_password, session.get('name')))
+              cur.execute("UPDATE mods SET password = %s WHERE username = %s",(hash_password,session.get('name'),))
               mysql.connection.commit()
 
               success = "Password changed"
