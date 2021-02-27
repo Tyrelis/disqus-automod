@@ -235,6 +235,15 @@ def login():
 
     return render_template("login.html")
 
+@app.route('/logout', methods=["POST", "GET"])
+def logout():
+  if session.get('name'):
+    session.pop('name', None)
+    return redirect(url_for('login'))
+  else:
+    error = "You need to login to log out."
+    return render_template("login.html", error=error)
+
 
 '''@app.route('/register', methods=["POST", "GET"])
 def register():
