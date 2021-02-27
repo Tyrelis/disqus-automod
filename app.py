@@ -578,7 +578,8 @@ def checkuser(username):
 @app.route('/deleteuser/<username>/<int:id>/', methods=["POST", "GET"])
 def deleteuser(username, id):
   if session.get('name'):
-    print('lol')
+    print(username)
+    print(id)
 
   else:
     error = "Unauthorized Access."
