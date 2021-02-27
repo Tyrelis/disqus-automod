@@ -3,7 +3,6 @@
 html,body{
 background-image: url("background.jpg");
 background-size: cover !important;
-background-repeat: no-repeat !important;
 height: 100% !important;
 font-family: 'Numans', sans-serif;
 }
@@ -22,7 +21,6 @@ background-color: rgba(0,0,0,0.5) !important;
 }
 
 .navbar{
-width: 1000px;
 margin-top: auto !important;
 margin-bottom: auto !important;
 background-color: rgba(0,0,0,0.5) !important;
