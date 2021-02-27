@@ -581,6 +581,13 @@ def deleteuser(username, id):
     print(username)
     print(id)
 
+    curl = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    curl.execute("SHOW count(*) FROM '{}'".format(username))
+    user = curl.fetchone()
+    curl.close()
+
+    print(user)
+
   else:
     error = "Unauthorized Access."
     return render_template("login.html", error=error)
