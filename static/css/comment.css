@@ -20,6 +20,12 @@ margin-bottom: auto;
 width: 1000px;
 }
 
+.navbar{
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+    background-color: rgba(0,0,0,0.5) !important;
+    }
+
 a{
     color: #FFC312;
 }
