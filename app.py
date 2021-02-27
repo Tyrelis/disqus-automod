@@ -575,6 +575,16 @@ def checkuser(username):
     return render_template("login.html", error=error)
 
 
+@app.route('/deleteuser/<username>/<int:id>/', methods=["POST", "GET"])
+def deleteuser(username, id):
+  if session.get('name'):
+    print('lol')
+
+  else:
+    error = "Unauthorized Access."
+    return render_template("login.html", error=error)
+
+
 @app.route('/404')
 def not_found():
   return render_template("404.html")
