@@ -63,6 +63,7 @@
                             <th>Reason</th>
                             <th>Permanent Ban</th>
                             <th>Moderator</th>
+                            <th>Remove</th>
                         <tr>
                     </thead>
                     <tbody>
@@ -77,6 +78,7 @@
                                 <td>No</td>
                             {% endif %}
                             <td>{{ user['moderator'] }}</td>
+                            <td><div class="text-danger"><b>X</b></div></td>
                         </tr>
                         {% endfor %}
                     </tbody>
