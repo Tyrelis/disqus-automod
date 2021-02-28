@@ -29,7 +29,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="{{ url_for('choice') }}">
-            <img src="{{url_for('static', filename='logo_front_page.png')}}" height="30">
+          <img src="{{url_for('static', filename='logo_front_page.png')}}" height="30">
         </a>
         <button class="navbar-toggler btn btn-light" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -39,15 +39,15 @@
             <li><a class="nav-item nav-link" href="{{ url_for('viewcomment') }}">Check Comment</a></li>
             <li><a class="nav-item nav-link" href="{{ url_for('viewuser') }}">Check User</a></li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{session['name']}}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ url_for('changepassword') }}"><div class="text-dark">Change Password</div></a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ url_for('logout') }}"><div class="text-danger">Log Out</div></a>
-                </div>
-              </li>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{session['name']}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('changepassword') }}"><div class="text-dark">Change Password</div></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('logout') }}"><div class="text-danger">Log Out</div></a>
+              </div>
+            </li>
           </div>
         </div>
       </nav>
