@@ -106,23 +106,23 @@
 
     <!-- Timeout Modal -->
     <div class="modal fade" id="timeoutModal" tabindex="-1" role="dialog" aria-labelledby="timeoutModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="timeoutModalLongTitle">Issue Timeout</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="timeoutModalLongTitle">Issue Timeout</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <div class="modal-body">
-              <form class="form-checkcomment" method="POST">
-                <div class="form-group">
-                  <div class="input-group form-group">
-                    <input type="text" class="form-control" name="timeout_reason" placeholder="reason" required>
-                  </div>
-                  <div class="input-group form-group">
-                    <input type="number" min="1" step="1" class="form-control" name="timeout_duration" placeholder="enter timeout duration (in days)" required>
-                  </div>
+            <form class="form-checkcomment" method="POST">
+              <div class="form-group">
+                <div class="input-group form-group">
+                  <input type="text" class="form-control" name="timeout_reason" placeholder="reason" required>
+                </div>
+                <div class="input-group form-group">
+                  <input type="number" min="1" step="1" class="form-control" name="timeout_duration" placeholder="enter timeout duration (in days)" required>
+                </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                   <button type="submit" name="timeout_btn" value="timeout_btn" class="btn btn-warning">Issue Timeout</button>
@@ -150,10 +150,10 @@
                 <div class="input-group form-group">
                   <input type="text" class="form-control" name="ban_reason" placeholder="reason" required>
                 </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="submit" name="ban_btn" class="btn btn-warning">Issue Ban</button>
-              </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <button type="submit" name="ban_btn" class="btn btn-warning">Issue Ban</button>
+                </div>
               </div>
             </form>
           </div>
