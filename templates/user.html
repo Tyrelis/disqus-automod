@@ -29,7 +29,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="{{ url_for('choice') }}">
-            <img src="{{url_for('static', filename='logo_front_page.png')}}" height="30">
+          <img src="{{url_for('static', filename='logo_front_page.png')}}" height="30">
         </a>
         <button class="navbar-toggler btn btn-light" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -39,15 +39,15 @@
             <li><a class="nav-item nav-link" href="{{ url_for('viewcomment') }}">Check Comment</a></li>
             <li><a class="nav-item nav-link" href="{{ url_for('viewuser') }}">Check User</a></li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{session['name']}}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ url_for('changepassword') }}"><div class="text-dark">Change Password</div></a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ url_for('logout') }}"><div class="text-danger">Log Out</div></a>
-                </div>
-              </li>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{session['name']}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('changepassword') }}"><div class="text-dark">Change Password</div></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('logout') }}"><div class="text-danger">Log Out</div></a>
+              </div>
+            </li>
           </div>
         </div>
       </nav>
@@ -75,41 +75,41 @@
                 {% if no_moderation %}
                 <div class="text-danger d-flex justify-content-center">
                   <label><br><b><i>{{username}}</i></b> has no previous moderation history.</label>
-                {% endif %}
                 </div>
+                {% endif %}
                 {% if user_data %}
                 <div class="text-white table-responsive">
                   <br>
                   <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th><div class="d-flex justify-content-center">Action Date</div</th>
-                            <th><div class="d-flex justify-content-center">Reason</div></th>
-                            <th><div class="d-flex justify-content-center">Permanent Ban</div></th>
-                            <th><div class="d-flex justify-content-center">Moderator</div></th>
-                            <th><div class="d-flex justify-content-center">Remove</div></th>
-                        <tr>
+                      <tr>
+                        <th><div class="d-flex justify-content-center">Action Date</div></th>
+                        <th><div class="d-flex justify-content-center">Reason</div></th>
+                        <th><div class="d-flex justify-content-center">Permanent Ban</div></th>
+                        <th><div class="d-flex justify-content-center">Moderator</div></th>
+                        <th><div class="d-flex justify-content-center">Remove</div></th>
+                      </tr>
                     </thead>
                     <tbody>
-                        {% for user in user_data %}
-                        <tr>
-                            <td><div class="d-flex justify-content-center">{{user['log_date']}}</div></td>
-                            <td><div class="d-flex justify-content-center">{{user['reason']}}</div></td>
-                            {% if user['permaban'] %}
-                                <td><div class="text-danger d-flex justify-content-center"><b>Yes</b></div></td>
-                            {% endif %}
-                            {% if user['permaban'] == 0 %}
-                                <td><div class="d-flex justify-content-center">No</div></td>
-                            {% endif %}
-                            <td><div class="d-flex justify-content-center">{{user['moderator']}}</div></td>
-                            <td><div class="d-flex justify-content-center"><a  class="text-danger" href="{{ url_for('deleteuser', username=username, id=user['id']) }}"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></a></div></td>
-                        </tr>
-                        {% endfor %}
+                      {% for user in user_data %}
+                      <tr>
+                        <td><div class="d-flex justify-content-center">{{user['log_date']}}</div></td>
+                        <td><div class="d-flex justify-content-center">{{user['reason']}}</div></td>
+                        {% if user['permaban'] %}
+                          <td><div class="text-danger d-flex justify-content-center"><b>Yes</b></div></td>
+                        {% endif %}
+                        {% if user['permaban'] == 0 %}
+                          <td><div class="d-flex justify-content-center">No</div></td>
+                        {% endif %}
+                        <td><div class="d-flex justify-content-center">{{user['moderator']}}</div></td>
+                        <td><div class="d-flex justify-content-center"><a  class="text-danger" href="{{ url_for('deleteuser', username=username, id=user['id']) }}"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></a></div></td>
+                      </tr>
+                      {% endfor %}
                     </tbody>
-                </table>
+                  </table>
                 </div>
                 {% endif %}
-             </div>
+              </div>
             </form>
           </div>
         </div>
