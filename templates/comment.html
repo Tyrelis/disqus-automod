@@ -123,6 +123,11 @@
                 <div class="input-group form-group">
                   <input type="number" min="1" step="1" class="form-control" name="timeout_duration" placeholder="enter timeout duration (in days)" required>
                 </div>
+                <div class="input-group form-group text-danger">
+                  <label>
+                    <b>Delete last 30 days of comments</b> <input type="checkbox" value="" id="timeout_delete_comments">
+                  </label>
+                </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                   <button type="submit" name="timeout_btn" value="timeout_btn" class="btn btn-warning">Issue Timeout</button>
