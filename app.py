@@ -409,10 +409,8 @@ def checkcomment(comment_id):
         
         if request.form.get('timeout_delete_comments'):
           discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'], delete_comments=1)
-          print("Timeout Delete Detected")
         else:
           discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'])
-          print("Timeout Delete Not Detected")
         discord_alert.timeout()
 
         url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
