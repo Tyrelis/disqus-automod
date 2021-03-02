@@ -28,7 +28,7 @@ class DiscordAlert:
     global API_KEY
     global access_token
     
-    def __init__(self, comment_id, reason, timeout = 0):
+    def __init__(self, comment_id, reason, timeout = 0, delete_comments = 0):
 
         url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY,
                                                                                                         comment_id,
@@ -44,6 +44,7 @@ class DiscordAlert:
         self.comment_id = int(comment_id)
         self.reason = reason
         self.timeout_days = int(timeout)
+        self.delete_comments = delete_comments
 
         cleanr = re.compile('<.p*?>')
         message = re.sub(cleanr, '<br>', response['response']['message'].replace('&amp;', 'and').replace('&lt;', '<').replace('&gt;', '>'))
@@ -132,8 +133,17 @@ class DiscordAlert:
             self.posted = requests.post(url_post)
             
             print("Posted = {}".format(self.posted))
-            
-        url_ban_user = 'https://disqus.com/api/3.0/forums/block/banPostAuthor.json?api_key={}&post={}&access_token={}&dateExpires={}&notes={}&banEmail=1&banUser=1'.format(
+
+        
+        if self.delete_comments:
+          url_ban_user = 'https://disqus.com/api/3.0/forums/block/banPostAuthor.json?api_key={}&post={}&access_token={}&dateExpires={}&notes={}&banEmail=1&banUser=1&retroactiveAction=1'.format(
+                                                                                                                                 API_KEY,
+                                                                                                                                 self.comment_id,
+                                                                                                                                 access_token,
+                                                                                                                                 timeout_duration,
+                                                                                                                                 ban_reason)
+        else:
+          url_ban_user = 'https://disqus.com/api/3.0/forums/block/banPostAuthor.json?api_key={}&post={}&access_token={}&dateExpires={}&notes={}&banEmail=1&banUser=1'.format(
                                                                                                                                  API_KEY,
                                                                                                                                  self.comment_id,
                                                                                                                                  access_token,
@@ -185,8 +195,15 @@ class DiscordAlert:
             self.posted = requests.post(url_post)
             
             print("Posted = {}".format(self.posted))
-            
-        url_ban_user = 'https://disqus.com/api/3.0/forums/block/banPostAuthor.json?api_key={}&post={}&access_token={}&notes={}&banEmail=1&banUser=1'.format(
+
+        if self.delete_comments:
+          url_ban_user = 'https://disqus.com/api/3.0/forums/block/banPostAuthor.json?api_key={}&post={}&access_token={}&notes={}&banEmail=1&banUser=1&retroactiveAction=1'.format(
+                                                                                                                                 API_KEY,
+                                                                                                                                 self.comment_id,
+                                                                                                                                 access_token,
+                                                                                                                                 ban_reason)
+        else:
+          url_ban_user = 'https://disqus.com/api/3.0/forums/block/banPostAuthor.json?api_key={}&post={}&access_token={}&notes={}&banEmail=1&banUser=1'.format(
                                                                                                                                  API_KEY,
                                                                                                                                  self.comment_id,
                                                                                                                                  access_token,
@@ -390,7 +407,12 @@ def checkcomment(comment_id):
           mysql.connection.commit()
           curl.close()
         
-        discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'])
+        if request.form.get('timeout_delete_comments'):
+          discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'], delete_comments=1)
+          print("Timeout Delete Detected")
+        else:
+          discord_alert = DiscordAlert(comment_id, reason=request.form['timeout_reason'], timeout=request.form['timeout_duration'])
+          print("Timeout Delete Not Detected")
         discord_alert.timeout()
 
         url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
@@ -442,7 +464,12 @@ def checkcomment(comment_id):
           mysql.connection.commit()
           curl.close()
         
-        discord_alert = DiscordAlert(comment_id, reason=request.form['ban_reason'])
+        if request.form.get('ban_delete_comments'):
+          discord_alert = DiscordAlert(comment_id, reason=request.form['ban_reason'], delete_comments=1)
+          print("Ban Delete Detected")
+        else:
+          discord_alert = DiscordAlert(comment_id, reason=request.form['ban_reason'])
+          print("Ban Delete Not Detected")
         discord_alert.ban()
 
         url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
