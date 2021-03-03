@@ -14,3 +14,5 @@ The login system utilizes MySQL to authenticate the moderators.
 Upon login, the moderators are given two choices, **Check Comment** and **Check User**, as shown below.
 
 ![Choice Screen](https://github.com/KennyStryker/9anime-disqus-bot/blob/main/images/choice.png?raw=true)
+
+## Check Comment
