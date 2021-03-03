@@ -16,3 +16,5 @@ Upon login, the moderators are given two choices, **Check Comment** and **Check 
 ![Choice Screen](https://github.com/KennyStryker/9anime-disqus-bot/blob/main/images/choice.png?raw=true)
 
 ## Check Comment
+
+Upon clicking **Check Comment**, you'll be introduced to the following screen where you'll be asked to enter the comment id.
