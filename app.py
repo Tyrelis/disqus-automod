@@ -7,6 +7,8 @@ import bcrypt
 import datetime
 import re
 import yaml
+import validators
+from urllib.parse import urlparse
 
 db = yaml.load(open('db.yaml'), Loader=yaml.FullLoader)
 
@@ -347,7 +349,16 @@ def viewcomment():
     error = None
     if request.method == "POST":
         try:
-          comment_id = int(request.form['comment_id'])
+          comment = request.form['comment_id']
+
+          if comment.isdigit():
+            comment_id = int(comment)
+          elif validators.url(comment):
+            comment_url = urlparse(comment)
+            comment_id = int(comment_url.path.split(':')[1])
+          else:
+            error = "Invalid Comment ID"
+            return render_template('viewcomment.html', error=error)
 
           url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
           
