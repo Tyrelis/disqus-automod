@@ -512,7 +512,13 @@ def checkcomment(comment_id):
             comment_id = int(comment)
           elif validators.url(comment):
             comment_url = urlparse(comment)
-            comment_id = int(comment_url.path.split(':')[1])
+            if not comment_url.fragment:
+              comment_id = int(comment_url.path.split(':')[1])
+            elif comment_url.fragment:
+              comment_id = int(comment_url.fragment.split('-')[1])
+            else:
+              error = "Invalid Comment URL"
+              return render_template('viewcomment.html', error=error)
           else:
             error = "Invalid Comment ID"
             return render_template('viewcomment.html', error=error)
