@@ -59,10 +59,12 @@
               <center>{{error}}</center>
             </div>
             {% endif %}
-            {% if success %}
+            {% if get_flashed_messages() %}
+            {% for success in get_flashed_messages() %}
             <div class="alert alert-success">
               <center>{{success}}</center>
             </div>
+            {% endfor %}
             {% endif %}
             <form class="form-checkcomment" action="/checkcomment/{{ comment_id }}/" method="POST">
               <div class="form-group">
