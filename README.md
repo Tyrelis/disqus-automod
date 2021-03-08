@@ -22,3 +22,5 @@ Upon clicking **Check Comment**, you'll be introduced to the following screen wh
 ![Comment Screen](https://github.com/KennyStryker/9anime-disqus-bot/blob/main/images/comment.png?raw=true)
 
 The users can either input **comment ID** or **comment URL** to retrieve the information regarding the comment and poster.
+
+Upon entry, the Disqus API will fetch information regarding the comment, like author, content, upvotes, downvotes, etc.
