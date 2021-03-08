@@ -474,7 +474,7 @@ def checkcomment(comment_id):
           print("Ban Delete Not Detected")
         discord_alert.ban()
 
-        flash("Peranent Ban Issued")
+        flash("Permanent Ban Issued")
         return redirect(url_for('checkcomment', comment_id = comment_id))
 
       try:
