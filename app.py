@@ -492,7 +492,12 @@ def checkcomment(comment_id):
           elif validators.url(comment):
             comment_url = urlparse(comment)
             if not comment_url.fragment:
-              comment_id = int(comment_url.path.split(':')[1])
+              if comment_url.netloc == "disq.us":
+                comment_url = comment
+                comment_url = requests.head(comment_url).headers['Location']
+                comment_id = int(comment_url.split('-')[1])
+              else:
+                comment_id = int(comment_url.path.split(':')[1])
             elif comment_url.fragment:
               comment_id = int(comment_url.fragment.split('-')[1])
             else:
