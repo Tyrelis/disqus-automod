@@ -261,8 +261,8 @@ def logout():
     session.pop('name', None)
     return redirect(url_for('login'))
   else:
-    error = "You need to login to log out."
-    return render_template("login.html", error=error)
+    flash("You need to login to log out.")
+    return redirect(url_for('login'))
 
 
 @app.route('/changepassword/', methods=["POST", "GET"])
