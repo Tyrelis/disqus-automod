@@ -308,8 +308,8 @@ def changepassword():
 
     return render_template("changepassword.html")
   else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
+    flash("Unauthorized Access.")
+    return redirect(url_for('login'))
 
 
 '''@app.route('/register', methods=["POST", "GET"])
@@ -339,8 +339,8 @@ def choice():
           return redirect(url_for('viewcomment'))
     return render_template("choice.html")
   else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
+    flash("Unauthorized Access.")
+    return redirect(url_for('login'))
 
 
 @app.route('/viewcomment/', methods=["POST", "GET"])
@@ -386,8 +386,8 @@ def viewcomment():
           return render_template('viewcomment.html', error=error)
     return render_template("viewcomment.html")
   else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
+    flash("Unauthorized Access.")
+    return redirect(url_for('login'))
 
 
 @app.route('/checkcomment/<int:comment_id>/', methods=["POST", "GET"])
@@ -575,8 +575,8 @@ def checkcomment(comment_id):
       print(e)
       return redirect(url_for('not_found'))
   else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
+    flash("Unauthorized Access.")
+    return redirect(url_for('login'))
 
 
 @app.route('/viewuser/', methods=["POST", "GET"])
@@ -605,8 +605,8 @@ def viewuser():
         return render_template('viewuser.html', error=error)
     return render_template('viewuser.html')
   else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
+    flash("Unauthorized Access.")
+    return redirect(url_for('login'))
 
 
 @app.route('/checkuser/<username>/', methods=["POST", "GET"])
@@ -668,8 +668,8 @@ def checkuser(username):
       return redirect(url_for('not_found'))
 
   else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
+    flash("Unauthorized Access.")
+    return redirect(url_for('login'))
 
 
 @app.route('/deleteuser/<username>/<int:id>/', methods=["POST", "GET"])
@@ -700,8 +700,8 @@ def deleteuser(username, id):
       print(e)
       return redirect(url_for('not_found'))    
   else:
-    error = "Unauthorized Access."
-    return render_template("login.html", error=error)
+    flash("Unauthorized Access.")
+    return redirect(url_for('login'))
 
 
 @app.route('/404')
