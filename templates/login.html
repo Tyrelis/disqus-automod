@@ -24,10 +24,12 @@
         <div class="container">
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
-                    {% if error %}
+                    {% if get_flashed_messages() %}
+                    {% for error in get_flashed_messages() %}
                     <div class="alert alert-danger">
                         <center>{{error}}</center>
                     </div>
+                    {% endfor %}
                     {% endif %}
                     <div class="card-header">
                         <h3><center>Sign In</center></h3>

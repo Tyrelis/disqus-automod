@@ -242,8 +242,8 @@ def login():
             session['name'] = user['username']
             return redirect(url_for('choice'))
           else:
-            error = "Invalid credentials"
-            return render_template("login.html", error=error)
+            flash("Invalid credentials")
+            return redirect(url_for('login'))
         else:
           error = "Invalid credentials"
           return render_template("login.html", error=error)
