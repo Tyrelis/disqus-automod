@@ -309,7 +309,7 @@ def changepassword():
     return render_template("changepassword.html")
   else:
     error = "Unauthorized Access."
-    return render_template("changepassword.html", error=error)
+    return render_template("login.html", error=error)
 
 
 '''@app.route('/register', methods=["POST", "GET"])
