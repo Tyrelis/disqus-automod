@@ -366,11 +366,11 @@ def viewcomment():
             elif comment_url.fragment:
               comment_id = int(comment_url.fragment.split('-')[1])
             else:
-              error = "Invalid Comment URL"
-              return render_template('viewcomment.html', error=error)
+              flash("Invalid Comment URL")
+              return redirect(url_for('viewcomment'))
           else:
-            error = "Invalid Comment ID"
-            return render_template('viewcomment.html', error=error)
+            flash("Invalid Comment URL")
+            return redirect(url_for('viewcomment'))
 
           url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
           
@@ -383,8 +383,9 @@ def viewcomment():
           return redirect(url_for('checkcomment', comment_id = comment_id))
         except Exception as e:
           print(e)
-          error = "Invalid Comment ID"
-          return render_template('viewcomment.html', error=error)
+          flash("Invalid Comment URL")
+          return redirect(url_for('viewcomment'))
+          
     return render_template("viewcomment.html")
   else:
     flash("Unauthorized Access.")
