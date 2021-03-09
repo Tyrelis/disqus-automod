@@ -609,9 +609,9 @@ def viewuser():
         return redirect(url_for('checkuser', username = username))
       except Exception as e:
         print(e)
-        error = "User doesn't exist"
-        return render_template('viewuser.html', error=error)
-        
+        flash("User doesn't exist")
+        return redirect(url_for('viewuser'))
+
     return render_template('viewuser.html')
   else:
     flash("Unauthorized Access.")
@@ -640,8 +640,8 @@ def checkuser(username):
             return redirect(url_for('checkuser', username = username))
           except Exception as e:
             print(e)
-            error = "User doesn't exist"
-            return render_template('viewuser.html', error=error)
+            flash("User doesn't exist")
+            return redirect(url_for('viewuser'))
 
       url = 'https://disqus.com/api/3.0/users/details.json?api_key={}&user=username:{}&access_token={}'.format(API_KEY, username, access_token)
             

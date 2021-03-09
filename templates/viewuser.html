@@ -54,10 +54,12 @@
       <div class="d-flex justify-content-center h-100">
         <div class="card">
           <div class="card-body">
-            {% if error %}
+            {% if get_flashed_messages() %}
+            {% for error in get_flashed_messages() %}
             <div class="alert alert-danger">
               <center>{{error}}</center>
             </div>
+            {% endfor %}
             {% endif %}
             <form class="form-viewuser" action="/viewuser/" method="POST">
               <div class="form-group">
