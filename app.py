@@ -611,6 +611,7 @@ def viewuser():
         print(e)
         error = "User doesn't exist"
         return render_template('viewuser.html', error=error)
+        
     return render_template('viewuser.html')
   else:
     flash("Unauthorized Access.")
