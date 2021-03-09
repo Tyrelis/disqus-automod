@@ -361,8 +361,11 @@ def viewcomment():
                 comment_url = comment
                 comment_url = requests.head(comment_url).headers['Location']
                 comment_id = int(comment_url.split('-')[1])
-              else:
+              elif comment_url.netloc == "disqus.com" or comment_url.netloc == "9anime-to.disqus.com":
                 comment_id = int(comment_url.path.split(':')[1])
+              else:
+                flash("Invalid Comment URL")
+                return redirect(url_for('viewcomment'))
             elif comment_url.fragment:
               comment_id = int(comment_url.fragment.split('-')[1])
             else:
@@ -498,15 +501,18 @@ def checkcomment(comment_id):
                 comment_url = comment
                 comment_url = requests.head(comment_url).headers['Location']
                 comment_id = int(comment_url.split('-')[1])
-              else:
+              elif comment_url.netloc == "disqus.com" or comment_url.netloc == "9anime-to.disqus.com":
                 comment_id = int(comment_url.path.split(':')[1])
+              else:
+                flash("Invalid Comment URL")
+                return redirect(url_for('viewcomment'))
             elif comment_url.fragment:
               comment_id = int(comment_url.fragment.split('-')[1])
             else:
               flash("Invalid Comment URL")
               return redirect(url_for('viewcomment'))
           else:
-            flash("Invalid Comment URL")
+            flash("Invalid Comment ID")
             return redirect(url_for('viewcomment'))
 
           url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
