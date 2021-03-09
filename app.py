@@ -291,20 +291,21 @@ def changepassword():
               cur.execute("UPDATE mods SET password = %s WHERE username = %s",(hash_password,session.get('name'),))
               mysql.connection.commit()
 
-              success = "Password changed"
-              return render_template("changepassword.html", success=success)
+              flash("Password changed", "success")
+              return redirect(url_for('changepassword'))
             else:
-              error = "New and confirm password must be same."
-            return render_template("changepassword.html", error=error)
+              flash("New and confirm password must be same.", "danger")
+            return redirect(url_for('changepassword'))
           else:
-            error = "Incorrect Password"
-            return render_template("changepassword.html", error=error)
+            flash("Incorrect Password", "danger")
+            return redirect(url_for('changepassword'))
         else:
-          error = "An error occurred."
-          return render_template("changepassword.html", error=error)
+          flash("An error occurred.", "danger")
+          return redirect(url_for('changepassword'))
       except Exception as e:
         print(e)
-        return render_template("changepassword.html", error=error)
+        flash("An error occurred.", "danger")
+        return redirect(url_for('changepassword'))
 
     return render_template("changepassword.html")
   else:
