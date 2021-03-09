@@ -245,12 +245,12 @@ def login():
             flash("Invalid credentials")
             return redirect(url_for('login'))
         else:
-          error = "Invalid credentials"
-          return render_template("login.html", error=error)
+          flash("Invalid credentials")
+          return redirect(url_for('login'))
       except Exception as e:
-        error = "An error occurred."
+        flash("An error occurred.")
         print(e)
-        return render_template("login.html", error=error)
+        return redirect(url_for('login'))
 
     return render_template("login.html")
 
