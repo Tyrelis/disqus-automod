@@ -369,7 +369,7 @@ def viewcomment():
               flash("Invalid Comment URL")
               return redirect(url_for('viewcomment'))
           else:
-            flash("Invalid Comment URL")
+            flash("Invalid Comment ID")
             return redirect(url_for('viewcomment'))
 
           url = 'https://disqus.com/api/3.0/posts/details.json?api_key={}&post={}&access_token={}'.format(API_KEY, comment_id, access_token)
@@ -383,7 +383,7 @@ def viewcomment():
           return redirect(url_for('checkcomment', comment_id = comment_id))
         except Exception as e:
           print(e)
-          flash("Invalid Comment URL")
+          flash("Invalid Comment ID")
           return redirect(url_for('viewcomment'))
 
     return render_template("viewcomment.html")
