@@ -597,6 +597,7 @@ def viewuser():
         username = request.form['username']
 
         if validators.url(username):
+          username = urlparse(username)
           username = username.path.split('/')[2]
 
         url = 'https://disqus.com/api/3.0/users/details.json?api_key={}&user=username:{}&access_token={}'.format(API_KEY, username, access_token)
