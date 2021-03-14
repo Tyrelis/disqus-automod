@@ -636,6 +636,15 @@ def checkuser(username):
           try:
             username = request.form['username']
 
+            if validators.url(username):
+              username = urlparse(username)
+              
+              if username.netloc == "disqus.com":
+                username = username.path.split('/')[2]
+              else:
+                flash("Invalid Profile Link")
+                return redirect(url_for('viewuser'))
+
             url = 'https://disqus.com/api/3.0/users/details.json?api_key={}&user=username:{}&access_token={}'.format(API_KEY, username, access_token)
             
             response = requests.get(url)
