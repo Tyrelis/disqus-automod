@@ -129,7 +129,7 @@ class DiscordAlert:
             timeout_message = '''Your comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a>.<br><br>You have been given a TimeOut ban for {} Day(s) and ONE warning point. If you're given TWO warning points within the next 30 days, you will be banned.<br><br>Username: @{}:disqus<br>Warned By: {}<br>Reason: {}<br>Your Comment: <spoiler>{}</spoiler>'''.format(self.timeout_days, self.user, self.mod, self.reason, self.message)
             
             url_post = 'https://disqus.com/api/3.0/posts/create.json?api_key={}&thread={}&access_token={}&message={}'.format(API_KEY,
-                                                                                                                            6292105195,
+                                                                                                                            db['WARNING_LOG'],
                                                                                                                             access_token,
                                                                                                                             timeout_message)
             self.posted = requests.post(url_post)
@@ -191,7 +191,7 @@ class DiscordAlert:
             ban_message = '''This comment has been deleted for violating <a href="https://docs.google.com/document/d/1QXiKpWgGlhA75JNsPy8BltOdNahks61guas3zOQLpis/edit"><b><u>9Anime Comment Policy</u></b></a><br><br>You have been banned.<br><br>Username: @{}:disqus<br>Reason: {}<br>Banned By: {}<br>Your Comment: <spoiler>{}</spoiler>'''.format(self.user, self.reason, self.mod, self.message)
             
             url_post = 'https://disqus.com/api/3.0/posts/create.json?api_key={}&thread={}&access_token={}&message={}'.format(API_KEY,
-                                                                                                                            6292105195,
+                                                                                                                            db['WARNING_LOG'],
                                                                                                                             access_token,
                                                                                                                             ban_message)
             self.posted = requests.post(url_post)
