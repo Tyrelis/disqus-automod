@@ -1,6 +1,12 @@
 ## Introduction
 A bot written in Python, utilising Flask web frame and Disqus API to ease the moderation and logging for the 9Anime Disqus Moderator.
 
+## Requirements
+* flask >= 1.1.2
+* flask-mysqldb >= 0.2.0
+* discord-webhook >= 0.11.0
+* yaml >= 0.2.5
+
 ## Login
 
 The users are greeted with login screen prior upon starting the application. The login screen looks like below.
