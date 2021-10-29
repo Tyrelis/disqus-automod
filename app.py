@@ -743,5 +743,5 @@ def not_found(e):
 
 if __name__ == '__main__':
 
-  app.secret_key = 'lol'
+  app.secret_key = 'Secret Key'
   app.run(debug=True)
