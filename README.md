@@ -10,7 +10,7 @@ A web-based application written in Python, utilising Flask web frame and Disqus 
 
 ## Configuration
 
-Make a file called ```db.yaml``` which contains the following content.
+Make a file called ```db.yaml``` in the same directory as ```app.py```which contains the following content.
 
 ```
 #API Access
