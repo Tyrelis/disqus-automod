@@ -30,6 +30,6 @@ WEBHOOK: WEBHOOK URL TO THE CHANNEL WHICH YOU WANT TO USE AS THE LOGGING CHANNEL
 
 ## Installation
 
-Once you've make configured ```db.yaml```, run the following command in the terminal.
+Once you've make configured ```db.yaml```, run the following command in the terminal in the root directory.
 
 ```flask run```
