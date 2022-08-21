@@ -1,5 +1,5 @@
 ## Introduction
-A web-based application written in Python, utilising Flask web frame and Disqus API to ease the moderation and logging for Disqus Moderation.
+A web-based application written in Python, utilising Flask web framework and Disqus API to ease the moderation and logging for Disqus Moderation.
 
 ## Requirements
 * flask >= 1.1.2
